@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap5 %} 
+{% block content %}
+
+
+<div style="padding: 2em;">
+<div class="row" style="margin:0px;">
+   <div class="col-lg-6">
+    <div class="container" style="background-color: rgb(227, 218, 232); padding:2em; border-radius: 2em;">
+    <h1 style="text-align:center;">Signup as a Teacher</h1>
+     <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% bootstrap_form teacher_form %}
+        <div style="text-align:center;">
+            <input style="padding: 0.5em 2em;" type="submit" class="btn btn-dark" value="Sign Up">
+        </div>
+        
+     </form>
+    </div>
+  </div>
+  <div class="col-lg-6" style="padding:1em;">
+    <img style="width:80%;" src="{% static 'accounts/photos/teacher-register.png' %}" alt="teacher_img">
+</div>
+</div>
+
+
+
+
+
+{% endblock content %}

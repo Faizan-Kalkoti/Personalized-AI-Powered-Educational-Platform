@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap5 %}
+{% block content %}
+<div style="padding: 2em;">
+    <div class="row" style="margin: 0px;">
+        <div class="col-lg-6">
+            <div class="container cont" style="padding:2em; background-color: #fee7e7; border-radius: 2em;">
+                <h1 style="text-align: center;">Sign up as a Student</h1>
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+                    {% bootstrap_form student_form %}
+                    <div style="text-align: center;">
+                        <input class="btn btn-dark" style="padding:0.5em 2em;" type="submit" value="Sign Up">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <img style="width: 100%;" src="{% static 'accounts/photos/student-register.png' %}" alt="photos">
+        </div>
+    </div>
+
+
+</div>
+
+{% endblock content %}
+

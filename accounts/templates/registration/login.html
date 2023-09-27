@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+{% load bootstrap5 %} 
+{% block content %}
+
+
+<div class="container" style="padding: 3em;">
+
+    <div class="row" style="margin: 0px; position: relative;left: 2em; top: 0em; z-index: 2;" >
+        <div class="col-lg-4"></div>
+        <div class="col-lg-4" style="text-align: center;">
+            <img style="width:50%;" src="{% static 'accounts/photos/login-books.png' %}" alt="books"></div>
+        <div class="col-lg-4"></div>    
+    </div>
+    <div class="row" style="margin:0px; position: relative; bottom: 3em">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6">
+            <div class="cont" style="border-radius: 2em; box-shadow: 1em 1em 1em rgb(226, 214, 213);">
+                <h1 style="text-align: center;">Login</h1>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                <div style="padding-bottom: 1em; text-align: center;">
+                    Don't have an account? <a style="text-decoration: none;" href="{% url 'accounts:studentsignup' %}">signup here</a>
+                </div>
+                <div style="text-align: center;">
+                    <input style="padding:0.5em 1.5em; font-size: 1.1em;" class="btn btn-dark" type="submit" value="Login">
+                </div>
+            </form>
+           </div>
+        </div>
+        <div class="col-lg-3"></div>
+    </div> <!--  End of the row -->
+   
+     
+</div>
+
+{% endblock content %}

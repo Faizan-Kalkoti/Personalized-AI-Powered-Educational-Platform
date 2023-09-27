@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+
+<div style="padding:1em;">
+
+{% if user.is_authenticated and user.teacher.is_type == 'teacher' and user.teacher.is_verified == True %}
+    <h2> This is a teacher signed in and verified </h2>
+{% elif user.is_authenticated and user.teacher.is_type == 'teacher' and user.teacher.is_verified == False %}
+    <h2>This is a teacher signed in but not verified </h2>
+{% else %}
+    {% if user.is_authenticated and user.student.is_type == 'student' %}
+        <h2> This is a student signed in </h2>
+    {% elif user.is_authenticated == True and user.is_superuser %}
+        <h2>The admin is signed in</h2> 
+        {{user.student.is_type}}
+    {% else %}
+        <h2>You are not signed in </h2>
+    {% endif %}
+{% endif %}
+
+    <div class="hello">
+        This is the html view to check if the project is working properly
+       </div>
+        <br>
+        <button id="clicker" class="btn btn-dark">
+            Click me
+        </button>
+        <br><br><div id="bye"></div>
+        
+    {{hello}} <br><br>
+    <form action="{% url 'djangocontent' %}">
+        <button class="btn btn-outline-secondary" type='submit' > click here to get data form django dynamically </button>
+        </form>
+    
+        <br> 
+        {{djangoboy}}
+        <hr>
+    
+        <br>
+        <form action="{% url 'djangoemail' %}">
+            <button  class="btn btn-outline-success" type='submit' > click here to send email </button>
+        </form>
+        <br>
+        {{email}}<hr><br>
+        <br> <!--Email with attachment-->
+        <a href="{% url 'emailattachment' %}" class="btn btn-warning">
+            send email with attachment!
+        </a>
+        <br> {{attachment}}
+    </div>
+    
+
+    <script src="{% static 'js/index.js' %}">
+    </script>
+
+{% endblock content %}
+    
