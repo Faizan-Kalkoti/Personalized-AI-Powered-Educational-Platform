@@ -3,30 +3,328 @@
 {% load bootstrap5 %} 
 {% block content %}
 
+<script src="{% static 'js/index.js' %}">
+</script>
+<!-- <script src="{% static 'js/bootstrap.min.js' %}"></script> -->
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 
+<!-- Start of the form -->
+<form id="myTeacherformInput" method="POST" enctype="multipart/form-data">
 <div style="padding: 2em;">
-<div class="row" style="margin:0px;">
+ <div class="row" style="margin:0px;">
    <div class="col-lg-6">
     <div class="container" style="background-color: rgb(227, 218, 232); padding:2em; border-radius: 2em;">
     <h1 style="text-align:center;">Signup as a Teacher</h1>
-     <form method="POST" enctype="multipart/form-data">
+     
         {% csrf_token %}
         {% bootstrap_form form %}
         {% bootstrap_form teacher_form %}
         <div style="text-align:center;">
-            <input style="padding: 0.5em 2em;" type="submit" class="btn btn-dark" value="Sign Up">
+            <button id="startformbtn" style="padding: 0.5em 2em;" type="button" class="btn btn-dark">
+            Sign Up</button>
+        </div>  
+
+    </div>
+ </div>
+   <div class="col-lg-6" style="padding:1em;">
+    <img style="width:80%;" src="{% static 'accounts/photos/teacher-register.png' %}" alt="teacher_img">
+   </div>
+ </div>
+</div> <!-- end of the rows grid)-->
+
+ <!-- Modal -->
+ <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div style="padding:1em; padding-bottom: 0em; text-align:right;">  
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> 
+      </div>
+      <div class="modal-header" style="align-items: center; justify-content:center;">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Email verified successfully!</h1>        
+      </div>
+
+      <div class="modal-body" style="justify-content:center; text-align:center; padding:0em; padding-bottom:0.8em;">
+          <div id="result-img" syle="text-align:center; display: flex; flex-direction:row; text-align:center; padding:0.5em; justify-content: center; align-items: center;">
+            <img style="width: 4em;" src="{% static 'accounts/photos/correct.jpg' %}" alt="right_img">
+          </div>       
         </div>
-        
-     </form>
+
+      <div id="result-btns" class="modal-body" style="text-align:center;">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-success">Sign up</button>
+      </div>
     </div>
   </div>
-  <div class="col-lg-6" style="padding:1em;">
-    <img style="width:80%;" src="{% static 'accounts/photos/teacher-register.png' %}" alt="teacher_img">
 </div>
+<!--End of the modal-->
+
+</form> <!-- End of the form -->
+
+<!-- Modal 1 For OTP generation -->
+<div class="modal fade" id="exampleModalToggle" data-bs-backdrop="static" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header" style="align-items: center; justify-content:center;">
+        <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Please Verify Your Email</h1>
+      </div>
+      
+      <div class="modal-body" style="text-align:center;">
+          Email: <span id="email-field1" style="font-weight: bold;"> Faizan.kalkoti@gmail.com</span> <br><br>
+          <button id="sendOTPbtn" class="btn btn-dark" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Send OTP</button>
+         &nbsp <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancel</button>
+      </div>
+      <div class="text-center" style="padding-bottom: 1em;">
+        An OTP will be sent to this email.
+      </div>
+    </div>
+  </div>
 </div>
+<!-- End of OTP generation modal-->
+
+
+
+<!-- Start of OTP verification modal -->
+<div class="modal fade" id="exampleModalToggle2" data-bs-backdrop="static" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header" style="justify-content:center;">
+        <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Please Enter the OTP</h1>
+      </div>
+
+      <div class="modal-body" style="justify-content:center; text-align:center;">
+          Email: <span id="email-field2" style="font-weight: bold;"> Faizan.kalkoti@gmail.com</span> <br><br>
+  <!--Div start-->  <div id="second-model-verification" style="display:flex; flex-direction: row; justify-content:center;">
+        <form id="verify_form" method="POST" onsubmit="fill_otp(event);">
+          {% csrf_token %}
+          <input id="enter_otp" type="textfield" style="width: 8em; height: 2.3em; padding:0.5em; border-radius: 0.5em; margin:0px;" >
+           &nbsp <button  type="submit" id="verify_otp_btn" style="margin:0px;"  class="btn btn-success" data-bs-target="#staticBackdrop" data-bs-toggle="modal">Verify OTP</button>
+        </form>
+        </div><!-- div end-->
+      </div>
+
+      <div class="modal-body" style="justify-content:center; text-align:center; padding:0em; padding-bottom:0.8em;">
+        <div syle="text-align:center; display: flex; flex-direction:row; text-align:center; padding:0.5em; justify-content: center; align-items: center;">
+          <button class="btn btn-outline-danger" data-bs-dismiss="modal">Cancel Verification</button>
+        </div>       
+      </div>
+
+      <div id="second-model-verification2" class="modal-footer" style="justify-content: center; text-align:center;">
+         <strong> OTP has been sent! </strong>
+        <br> <div style="display:block;"> <i> [valid till 5 minutes!] </i> </div>
+      </div>
+     
+    </div>
+  </div>
+</div>
+<!-- End of this modal -->
+
+
+
+<!-- Begenning of the javascript -->
+<script>
+  // To display which email we are verifying in the pop-ups
+    function Fill_the_values()
+    {
+    // To get user input in javascript and display in the modals (pop-ups)
+    var form_email = document.querySelector('input[name="email"]').value;
+    var form_user_name = document.getElementById('id_username').value;
+
+    // To get the modal from boostrap 
+    var myModal = new bootstrap.Modal(document.getElementById('exampleModalToggle'))
+
+        if(form_email != "")
+        {
+            myModal.show(); //show model
+            console.log("emial: ",form_email)
+            document.getElementById('email-field1').innerText = form_email
+            document.getElementById('email-field2').innerText = form_email
+        }
+        else
+        {
+        alert("Please enter all the values!")
+        }
+    }
+
+    // Here we call that function as the event listener method
+    document.getElementById('startformbtn').addEventListener('click',Fill_the_values);
+
+
+// Function to handle AJAX requests
+// Original get request
+    var generated_OTP;
+    function getData() {
+    
+    var form_email1 = document.querySelector('input[name="email"]').value;
+    var form_user_name1 = document.getElementById('id_username').value;
+
+    //data to be sent through get request
+    data = {user_name: form_user_name1,
+        email: form_email1}  
+
+    var queryString = Object.keys(data).map(function(key) {
+        return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]);
+    }).join('&');
+
+    var url1 = "{% url 'accounts:generateotp' %}";
+
+    if (queryString) {
+    url1 += '?' + queryString; } // Append to the url string the get request data
+
+    // Create a new XMLHttpRequest object
+    var xhr = new XMLHttpRequest();
+
+    // Configure the request
+    xhr.open('GET', url1, true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+
+    // Set up the event handlers for success and error
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            // Parse the JSON response
+            var response = JSON.parse(xhr.responseText);
+
+            // Handle the response here
+            var obj = response;
+            generated_OTP = response.OTP
+            var entered_otp = document.getElementById('enter_otp').value
+
+            // get the OTP generated from the server and check if the user email exists already?
+            if(response.result == 'User Email exists')
+            {
+                document.getElementById('email-field2').innerText = "This email exists!"
+                document.getElementById('second-model-verification').innerHTML = "No OTP has been sent!"
+                document.getElementById('second-model-verification2').innerText = "Register with a different email"
+            }
+            else //if it  does not exist then set contents of the next pop-up as a form to fill for verfiying the OTP sent!
+            {
+                str1 = `<form id="verify_form" method="POST" onsubmit="fill_otp(event);"><input id="enter_otp" type="textfield" style="width: 8em; height: 2.3em; padding:0.5em; border-radius: 0.5em; margin:0px;" >
+                &nbsp <button id="verify_otp_btn" type="submit" onsub style="margin:0px;" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Verify OTP</button></form>`;
+                
+                str2 = `<strong> OTP has been sent! </strong>
+                <br> <div style="display:block;"> <i> [valid till 5 minutes!] </i> </div>`;
+
+                document.getElementById('email-field2').innerText = form_email1;
+                document.getElementById('second-model-verification').innerHTML = str1;
+                document.getElementById('second-model-verification2').innerHTML = str2;
+
+                hel = document.getElementById('verify_otp_btn')
+                console.log(hel)
+            }
+            console.log(obj);
+            console.log("the generated otp is: ", generated_OTP)
+        } else {
+            // Handle errors
+            console.error('Error:', xhr.statusText);
+        }
+    }; //xhr.onload function end here
+
+    xhr.onerror = function() {
+        // Handle network errors
+        console.error('Network error occurred');
+    };
+
+    // Send the request
+    xhr.send();
+}//getdata function ended here ....
+document.getElementById('sendOTPbtn').addEventListener('click', getData);
 
 
 
 
+ // Function to prevent form submission on Enter key press
+ function preventFormSubmission(event) {
+        if (event.keyCode === 13) { // Check if the Enter key was pressed (key code 13)
+            event.preventDefault(); // Prevent the default form submission behavior
+        }
+    }
+    // Attach the preventFormSubmission function to the input field's keydown event
+    document.getElementById("myTeacherformInput").addEventListener("keydown", preventFormSubmission);
+
+// To check if the OTP is correct or not
+
+  // Post request functions (and related functions)
+  function getCookie(name) {
+                  var cookieValue = null;
+                  if (document.cookie && document.cookie !== '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                      var cookie = cookies[i].trim();
+                      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                      }
+                    }
+                  }
+      return cookieValue;
+  }
+  
+  
+    // Submit form using AJAX
+    function fill_otp(event) {
+      var csrftoken = getCookie('csrftoken');
+      event.preventDefault(); // Prevent default form submission
+  
+      // To reformat the bio field of the original form 'registration form'
+      const originalbio = document.getElementById('id_bio').value;
+      const replacedbio = originalbio.replace(/\s/g, '_');
+      console.log(replacedbio);
+      document.getElementById('id_bio').value = replacedbio;
+  
+      // set the url and the data to be sent
+      var url2 = "{% url 'accounts:verifyotp' %}";
+      otp_entered= document.getElementById('enter_otp').value
+      email_entered = document.getElementById('id_email').value
+      var formData1 = {otp: otp_entered,
+                      email : email_entered};
+      console.log("sending:-", otp_entered, email_entered)
+      var formData = JSON.stringify(formData1)
+  
+      // Create and configure the AJAX request
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', url2, true);
+      xhr.setRequestHeader('X-CSRFToken', csrftoken);
+  
+      // Define the success and error handlers
+      xhr.onload = function () {
+        if (xhr.status === 200) {
+  
+          // Handle the successful response here
+          var response = JSON.parse(xhr.responseText);
+          console.log(response);
+          var obj = response;
+          
+          if(response.verified == 'yes')
+          {
+            document.getElementById('staticBackdropLabel').innerText = response.staticBackdropLabel;
+            document.getElementById('result-btns').innerHTML = response.result_btns;
+            console.log(response.result_img)
+            photo =response.result_img
+            document.getElementById('result-img').innerHTML = `<img style="width: 4em;" src="{% static 'accounts/photos/correct.jpg' %}" alt="right_img">`
+            
+          }
+          else{
+            document.getElementById('staticBackdropLabel').innerText = response.staticBackdropLabel;
+            document.getElementById('result-btns').innerHTML = response.result_btns;
+            console.log(response.result_img)
+            photo =response.result_img
+            // document.getElementById('result_img').innerHTML = `<img style="width: 4em;" src="`+response.result_img+`" alt="right_img">`
+            document.getElementById('result-img').innerHTML = `<img style="width: 4em;" src="{% static 'accounts/photos/wrong.jpg' %}" alt="right_img">`
+            
+          }
+          
+        } else {
+          // Handle errors here
+          console.error(xhr.statusText);
+        }
+      };
+  
+      xhr.onerror = function () {
+        console.error('Request failed');
+      };
+  
+      // Send the AJAX request
+      xhr.send(formData);
+    }
+  </script>
 
 {% endblock content %}

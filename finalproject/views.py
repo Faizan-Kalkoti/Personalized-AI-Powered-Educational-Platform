@@ -34,3 +34,7 @@ def send_with_attachment(request):
     mail.send()
     d ={"attachment":"attachment sent successfully!"}
     return render(request, 'index.html', d)
+
+
+
+

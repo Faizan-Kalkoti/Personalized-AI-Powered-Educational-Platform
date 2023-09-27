@@ -14,8 +14,6 @@ class BaseUserForm(UserCreationForm):
         super().__init__(*args, **kwargs)
         self.fields['username'].label = "Your Username"
         self.fields['email'].label = "Your Email"
-        # self.fields['password'].label = "Enter password"
-        # self.fields['password'].label = "Confirm password"
 
 class TeacherRegistrationForm(forms.ModelForm):
     class Meta:

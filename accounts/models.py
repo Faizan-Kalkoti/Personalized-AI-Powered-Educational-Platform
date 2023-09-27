@@ -64,3 +64,13 @@ class Student(models.Model):
         return self.name
 
     
+# For verifying OTP through rest apis or json views
+class OTPverification(models.Model):
+    user_name = models.CharField(max_length=100)
+    email_field = models.EmailField(unique=True)
+    otp_field = models.CharField(max_length=6)
+    time_generated = models.DateTimeField()
+    is_OTP_verfified = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.otp_field

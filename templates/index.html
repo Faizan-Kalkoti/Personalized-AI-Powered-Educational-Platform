@@ -31,7 +31,7 @@
         
     {{hello}} <br><br>
     <form action="{% url 'djangocontent' %}">
-        <button class="btn btn-outline-secondary" type='submit' > click here to get data form django dynamically </button>
+        <button class="btn btn-outline-secondary" onclick="myfunction()" type='submit' > click here to get data form django dynamically </button>
         </form>
     
         <br> 
@@ -51,7 +51,7 @@
         <br> {{attachment}}
     </div>
     
-
+ <script src="{% static 'js.boostrap.min.js' %}"></script>
     <script src="{% static 'js/index.js' %}">
     </script>
 

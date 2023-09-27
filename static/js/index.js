@@ -1,9 +1,9 @@
 button = document.getElementById('clicker');
 tk =document.getElementById('bye')
 
-button.addEventListener('click', myfunction);
+console.log(button)
 
-function myfunction()
-{
-tk.innerHTML= 'This is from javascript, <br> this means javascript is working!';
-}
+
+  function myfunction(){
+    document.getElementById('bye').innerHTML= 'This is from javascript, <br> this means javascript is working!';
+  }
