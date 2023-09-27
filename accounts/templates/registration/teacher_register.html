@@ -5,7 +5,7 @@
 
 <script src="{% static 'js/index.js' %}">
 </script>
-<!-- <script src="{% static 'js/bootstrap.min.js' %}"></script> -->
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
 <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 
 <!-- Start of the form -->
@@ -50,7 +50,7 @@
         </div>
 
       <div id="result-btns" class="modal-body" style="text-align:center;">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" onclick="closefinalmodel()" id="Close-end" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         <button type="submit" class="btn btn-success">Sign up</button>
       </div>
     </div>
@@ -71,7 +71,7 @@
       <div class="modal-body" style="text-align:center;">
           Email: <span id="email-field1" style="font-weight: bold;"> Faizan.kalkoti@gmail.com</span> <br><br>
           <button id="sendOTPbtn" class="btn btn-dark" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Send OTP</button>
-         &nbsp <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancel</button>
+         &nbsp <button type="button" id="close-btn-first" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancel</button>
       </div>
       <div class="text-center" style="padding-bottom: 1em;">
         An OTP will be sent to this email.
@@ -93,7 +93,7 @@
 
       <div class="modal-body" style="justify-content:center; text-align:center;">
           Email: <span id="email-field2" style="font-weight: bold;"> Faizan.kalkoti@gmail.com</span> <br><br>
-  <!--Div start-->  <div id="second-model-verification" style="display:flex; flex-direction: row; justify-content:center;">
+        <!--Div start-->  <div id="second-model-verification" style="display:flex; flex-direction: row; justify-content:center;">
         <form id="verify_form" method="POST" onsubmit="fill_otp(event);">
           {% csrf_token %}
           <input id="enter_otp" type="textfield" style="width: 8em; height: 2.3em; padding:0.5em; border-radius: 0.5em; margin:0px;" >
@@ -104,7 +104,7 @@
 
       <div class="modal-body" style="justify-content:center; text-align:center; padding:0em; padding-bottom:0.8em;">
         <div syle="text-align:center; display: flex; flex-direction:row; text-align:center; padding:0.5em; justify-content: center; align-items: center;">
-          <button class="btn btn-outline-danger" data-bs-dismiss="modal">Cancel Verification</button>
+          <button id="cancel-verification" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancel Verification</button>
         </div>       
       </div>
 
@@ -148,6 +148,60 @@
     // Here we call that function as the event listener method
     document.getElementById('startformbtn').addEventListener('click',Fill_the_values);
 
+
+// To close and open modals correctly
+// This is to ensure the model closes after we move on to the next
+          // For closing (1st) first modal
+          document.getElementById('sendOTPbtn').addEventListener('click', function()
+          {
+            var myModal1 = document.getElementById('exampleModalToggle');
+            myModal1.classList.remove('show');
+            var modalBackdrop = document.querySelector('.modal-backdrop');
+            if (modalBackdrop) {
+            // Remove the backdrop element
+            modalBackdrop.parentNode.removeChild(modalBackdrop);}
+            myModal1.style.display="none";
+            myModal1.removeAttribute('aria-modal');
+            myModal1.removeAttribute('role');
+            myModal1.setAttribute('aria-hidden', 'true');
+         });
+
+         // This is to ensure the model closes after we move on to the next
+        // For closing (2nd) Second modal
+         document.getElementById('verify_otp_btn').addEventListener('click', function()
+         {
+          console.log("this is second modal event listener!")
+          var myModal2 = document.getElementById('exampleModalToggle2');
+          var modalBackdrop = document.querySelector('.modal-backdrop');
+            if (modalBackdrop) {
+            // Remove the backdrop element
+            modalBackdrop.parentNode.removeChild(modalBackdrop);}
+            myModal2.style.display="none";
+            myModal2.removeAttribute('aria-modal');
+            myModal2.removeAttribute('role');
+            myModal2.setAttribute('aria-hidden', 'true');      
+         });
+
+        //  FOr scrolling when closed
+        document.getElementById('cancel-verification').addEventListener('click', function()
+        {
+          console.log('close button of verification modal is pressed.')
+          document.getElementsByTagName('body')[0].style.overflow = "visible";
+        });
+
+        //  FOr scrolling when closed
+        function closefinalmodel()
+        {
+          console.log('close of last model')
+          document.getElementsByTagName('body')[0].style.overflow = "visible";
+          var modalBackdrop = document.querySelector('.modal-backdrop');
+            if (modalBackdrop) {
+            // Remove the backdrop element
+            modalBackdrop.parentNode.removeChild(modalBackdrop);}
+        }
+
+
+        document.getElementById('Close-end').addEventListener('click', closefinalmodel);
 
 // Function to handle AJAX requests
 // Original get request
@@ -300,7 +354,10 @@ document.getElementById('sendOTPbtn').addEventListener('click', getData);
             console.log(response.result_img)
             photo =response.result_img
             document.getElementById('result-img').innerHTML = `<img style="width: 4em;" src="{% static 'accounts/photos/correct.jpg' %}" alt="right_img">`
-            
+            var modalBackdrop = document.querySelector('.modal-backdrop');
+            if (modalBackdrop) {
+            // Remove the backdrop element
+            modalBackdrop.parentNode.removeChild(modalBackdrop);}
           }
           else{
             document.getElementById('staticBackdropLabel').innerText = response.staticBackdropLabel;
@@ -309,7 +366,10 @@ document.getElementById('sendOTPbtn').addEventListener('click', getData);
             photo =response.result_img
             // document.getElementById('result_img').innerHTML = `<img style="width: 4em;" src="`+response.result_img+`" alt="right_img">`
             document.getElementById('result-img').innerHTML = `<img style="width: 4em;" src="{% static 'accounts/photos/wrong.jpg' %}" alt="right_img">`
-            
+            var modalBackdrop = document.querySelector('.modal-backdrop');
+            if (modalBackdrop) {
+            // Remove the backdrop element
+            modalBackdrop.parentNode.removeChild(modalBackdrop);}
           }
           
         } else {
@@ -324,7 +384,22 @@ document.getElementById('sendOTPbtn').addEventListener('click', getData);
   
       // Send the AJAX request
       xhr.send(formData);
+
+      var myModal = document.getElementById('exampleModalToggle2');
+            myModal.classList.remove('show');
+            var modalBackdrop = document.querySelector('.modal-backdrop');
+            if (modalBackdrop) {
+            // Remove the backdrop element
+            modalBackdrop.parentNode.removeChild(modalBackdrop);}
+            myModal.style.display="none";
+            myModal.removeAttribute('aria-modal');
+            myModal.removeAttribute('role');
+            myModal.setAttribute('aria-hidden', 'true');
+            document.getElementsByTagName('body')[0].style.overflow = "visible"
     }
+
+    setInterval(function () {document.getElementsByTagName('body')[0].style.overflow = "auto"}, 1000);
+
   </script>
 
 {% endblock content %}
