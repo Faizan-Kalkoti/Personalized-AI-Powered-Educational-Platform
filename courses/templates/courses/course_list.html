@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+<div style="padding: 1em 2em;">
+  <h5> Find the course </h5>
+  <form name="searchform" id="searchform" method="GET">
+    <div class="column" style="justify-items:center;">
+     {% comment %} {% csrf_token %} {% endcomment %}
+    <input type="textfield" name='name' placeholder=" Search course" style="padding: 0.3em 0em; margin-bottom:0px;">
+    <input type="submit" value="Search" class="btn btn-dark" style=" padding:0.36em 2em; margin:0px 1px; transform: translate(0px,-2px)">
+    </div>
+  </form>
+</div>
+
+
+<div style="padding:2em; margin:0px;" class="row">
+{% for course in object_list %}
+
+<div class="col-lg-3" style="margin-bottom: 2em;">
+<div class="card course-card" style="">
+<a href="{% url 'courses:singlecourse' slug=course.slug %}" alt="single-course"
+ style="text-decoration:none; color: black; ">
+    <img src="{{course.course_img.url}}" style="width: 18rem; height:10em;" class="card-img-top course-img" alt="coures image">
+    <div class="card-body" style="margin-top: 0px; padding: 10px;">
+      <p class="card-text" style="">
+        <h5>{{course.course_name}}</h5>
+        by {{course.made_by_teacher.name}}
+    <br> at {{course.date_generated|date:"l, F j, Y"}}</p>
+        
+    </div>
+</a>
+  </div>
+</div> <!--end of a card column-->
+{% endfor %}
+
+</div> <!-- end of the row -->
+
+
+{% endblock content %}

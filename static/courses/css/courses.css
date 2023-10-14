@@ -1,0 +1,19 @@
+.course-img{
+    /* width:18rem; */
+    height:10em;
+    scale: 0.8;
+}
+
+.course-img:hover{
+    scale: 0.9;
+    transition: 0.3s;
+}
+
+.course-card{
+    width:18rem; 
+    height: 18rem; 
+    border-radius:0.5em; 
+    margin-bottom: 1em; 
+    box-shadow: 0em 0em 1em grey; 
+    overflow:none;
+}

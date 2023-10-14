@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+
+<div class="row" style="margin:0px; justify-content:center; padding:2em; font-size:1.1em;">
+    <div class="col-lg-4">
+        <div style="padding:2em; background-color: lightgrey; border-radius: 1em;" >
+            <h4 style="text-align:center;"> Terms and Conditions </h4>
+            <h5 style="text-align:center;"> Please read this before deleting!</h5>
+            <br>
+            Deleting this course will remove it from the platform and unenroll all students.
+             Students will lose access to course materials and progress tracking.
+             This action cannot be undone. Please proceed with caution. 
+             Once the course is deleted, it cannot be recovered, and all
+              associated data will be permanently lost.
+              <br><br><hr>
+              <p style="padding:0.5em; text-align:center;"> 
+              Course to be deleted:  <strong> "{{course.course_name}}" </strong>
+              </p>
+            <hr>
+            <form method="POST" style="text-align:center;">
+            {% csrf_token %}
+            <input type='submit' value="Delete" class="btn btn-danger">
+            </form>
+        </div>
+        
+        
+    </div>
+</div>
+
+{% endblock content %}

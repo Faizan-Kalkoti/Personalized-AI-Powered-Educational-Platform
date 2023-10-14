@@ -16,22 +16,34 @@ class Course(models.Model):
     course_name = models.CharField(max_length=100)
     made_by_teacher = models.ForeignKey(to=Teacher , on_delete=models.CASCADE, related_name='made_course')
     student = models.ManyToManyField(Student ,through='Course_members', related_name='has_course') # To get through the model name
-    course_img = models.ImageField(upload_to='photos/courses') # to change the upload path
+    course_img = models.ImageField(upload_to='photos/courses',blank=True) # to change the upload path
     course_description = models.CharField(max_length=300)
+    slug = models.SlugField()
+    iscomplete = models.BooleanField(default=False)
+
+
+    # for time in courses
     tz1 = pytz.timezone('Asia/Kolkata')
     current_time = timezone.now().astimezone(tz1)
     duration = timedelta(hours=5, minutes=30)
     current_date = current_time + duration
     date_generated = models.DateTimeField(default=current_date)
-    # date_generated = models.DateField(auto_now_add=True)
-    slug = models.SlugField()
+    
 
     def __str__(self):
         return self.course_name
     
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.course_name)
-        # self.g_description_html = misaka.html(self.g_description)
+        if not self.slug:
+            base_slug = slugify(self.course_name)
+            unique_slug = base_slug
+            counter = 1
+            while Course.objects.filter(slug=unique_slug).exists():
+                unique_slug = f"{base_slug}-{counter}"
+                counter += 1
+            self.slug = unique_slug
+        if not self.made_by_teacher:
+           self.made_by_teacher = self.request.user.teacher
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):

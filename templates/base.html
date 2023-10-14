@@ -8,8 +8,7 @@
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-
+    <link rel="stylesheet" href="{% static 'courses/css/courses.css' %}">
 </head>
 <body>
 
@@ -28,20 +27,29 @@
             <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="">Courses</a>
+            <a class="nav-link" href="{% url 'courses:allcourseslist' %}">Courses</a>
           </li>
-          
           <li class="nav-item">
-            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+            <a class="nav-link" href="">About</a>
           </li>
           
         </ul>
         <ul class="navbar-nav mb-2 mb-lg-0">
             
             {% if user.is_authenticated %}
+            {% if user.is_superuser %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'admin:index' %}">My Admin Dashboard</a>
+            </li>
+            {% elif not user.teacher %}
             <li class="nav-item">
               <a class="nav-link" href="">My Dashboard</a>
             </li>
+            {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'courses:teacher_dashboard' %}">Teachers Dashboard</a>
+            </li>
+            {% endif %}
             <li class="nav-item">
               <a class="nav-link" href="">My Groups</a>
             </li>
@@ -52,9 +60,6 @@
               <a class="nav-link" href="">{{user.username}}</a>
             </li>
             {% else %}
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'admin:index' %}">Admin</a>
-            </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'accounts:teachersignup' %}">Register to Teach</a>
             </li>

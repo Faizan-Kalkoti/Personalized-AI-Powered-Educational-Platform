@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="row" style="margin: 0%; padding: 1em;">
+<h2 style="text-align: center;"> Welcome {{user.username}}</h2>
+<hr style="width: 80%; margin: auto; padding: 0.1em; margin-bottom: 1em;" >
+</div> <!-- end of the first row -->
+
+<div class="row" style="margin: 0px; padding:1em;">
+    <div class="col-lg-4">
+        <div class='teacher-settings1' style="background-color: bisque; padding: 1em;">
+        <!-- start of the options column -->
+
+{% if user.teacher.is_verified or user.is_superuser%}
+<div style="padding: 1em;">
+{% if user.is_superuser%}
+<a style="text-decoration: none;" href="">
+{% else %}
+<div style="padding: 1em; padding-bottom: 2em; text-align: center;">
+<img style="width: 200px; height: 200px; border-radius: 50%; background-color: white;
+                          border: 3px solid rgb(73, 73, 73);"
+      src="{{user.teacher.profile_photo.url}}" alt="image">
+</div>
+<h5>Instrcutors Name: {{user.username}}</h5>
+<p><a class="btn btn-dark" href="">Update course</a></p>
+{% endif %}
+<a style="text-decoration: none;" href="{% url 'courses:createcourse' %}">
+<button class='btn btn-success'> Create course </button></a>
+</div>
+{% elif not user.teacher.is_verified and user.is_authenticated %}
+<div style="padding: 1em;"> 
+<br>
+<h3>You are not a verified teacher yet.</h3> So please wait until you are verified!
+</div>
+{% else %}
+{%endif%}
+
+        </div><!--end of the options column -->
+ </div>
+
+<div class="col-lg-8">
+        <div class="courses-made-teacher" style="background-color: rgb(224, 255, 245);
+        padding: 1em;">
+        <h3 style="text-align: center;">Courses made by you</h3>
+
+<!-- start of the course list -->        
+<div style="padding:2em; margin:0px;" class="row">
+    {% for course in courses %}
+    
+    <div class="col" style="margin-bottom: 1em; overflow-x: wrap;">
+    <div class="card course-card" >
+    <a href="{% url 'courses:singlecourse' slug=course.slug %}" alt="single-course"
+     style="text-decoration:none; color: black; ">
+        <img src="{{course.course_img.url}}" style="width: 18rem; height:10em;" class="card-img-top course-img" alt="coures image">
+        <div class="card-body" style="margin-top: 0px; padding: 10px;">
+          <p class="card-text" style="">
+            <h5>{{course.course_name}}</h5>
+            by {{course.made_by_teacher.name}}
+        <br> at {{course.date_generated|date:"l, F j, Y"}}</p>
+      </div>
+    </a>
+    </div>
+    </div> <!--end of a card column-->
+    {% endfor %}
+</div> <!-- end of the row -->
+    
+
+
+    </div> <!-- end of the teacher dashboard column -->
+
+</div>
+</div>
+{% endblock content %}

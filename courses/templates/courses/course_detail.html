@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div style="padding: 1em;">
+    this is the courses detail page
+    <br> <br>
+{% if user.teacher.name == course.made_by_teacher.name %}
+  You made this course! <br>
+    To delete this course: &nbsp
+    <a class="btn btn-danger" href="{% url 'courses:deletecourse' slug=course.slug %}">Delete This course!</a>
+    <br><br>
+    <a class="btn btn-secondary" href="{% url 'courses:coursecompleted' slug=course.slug %}">Mark the course as completed
+    </a>
+{% else %}
+you did not make this course
+{% endif %}
+</div>
+
+
+{% endblock content %}

@@ -21,8 +21,12 @@ from finalproject import views
 from accounts import views as vs
 
 urlpatterns = [
+    # these are the urls that lead to other apps in the project
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls', namespace='accounts')),
+    path('courses/', include('courses.urls', namespace='courses')),
+
+    # this are the base project related views
     path('', views.index, name='index'),
     path('django/', views.djangocontent, name='djangocontent'),
     path('email-attachment/', views.send_with_attachment, name="emailattachment"),
