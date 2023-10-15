@@ -5,10 +5,12 @@
 <div class="row" style="margin:0px; padding: 2em;">
 <div class="col-lg-5">
 <div style="padding:2em; background-color: lightgrey;">
+    <h3 style="text-align: center;"> Create course</h3>
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {% bootstrap_form form %}
-        <input type="submit" class="btn btn-dark" value="Create Course">
+        <div style="text-align:center;"> 
+        <input type="submit" class="btn btn-dark" value="Create Course"> </div>
     </form>
 </div></div>
 </div>

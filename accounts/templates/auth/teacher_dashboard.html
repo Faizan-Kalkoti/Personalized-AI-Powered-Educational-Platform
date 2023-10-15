@@ -3,46 +3,116 @@
 {% block content %}
 <div class="row" style="margin: 0%; padding: 1em;">
 <h2 style="text-align: center;"> Welcome {{user.username}}</h2>
-<hr style="width: 80%; margin: auto; padding: 0.1em; margin-bottom: 1em;" >
+<hr style="width: 80%; margin: auto; padding: 0.1em; margin-bottom: 0em;" >
 </div> <!-- end of the first row -->
 
 <div class="row" style="margin: 0px; padding:1em;">
-    <div class="col-lg-4">
-        <div class='teacher-settings1' style="background-color: bisque; padding: 1em;">
+
+<div class="col-lg-3"> <!-- Start of the columns -->
+    <div class='teacher-settings1' style="background-color: bisque; padding: 1em;">
         <!-- start of the options column -->
 
 {% if user.teacher.is_verified or user.is_superuser%}
 <div style="padding: 1em;">
-{% if user.is_superuser%}
-<a style="text-decoration: none;" href="">
-{% else %}
-<div style="padding: 1em; padding-bottom: 2em; text-align: center;">
-<img style="width: 200px; height: 200px; border-radius: 50%; background-color: white;
-                          border: 3px solid rgb(73, 73, 73);"
+ {% if user.is_superuser%}
+   <a style="text-decoration: none;" href="">
+ {% else %}
+   <div style="padding: 1em; padding-bottom: 2em; text-align: center;">
+   <img style="width: 200px; height: 200px; border-radius: 50%; background-color: white;
+            border: 3px solid rgb(73, 73, 73);"
       src="{{user.teacher.profile_photo.url}}" alt="image">
-</div>
-<h5>Instrcutors Name: {{user.username}}</h5>
-<p><a class="btn btn-dark" href="">Update course</a></p>
-{% endif %}
-<a style="text-decoration: none;" href="{% url 'courses:createcourse' %}">
-<button class='btn btn-success'> Create course </button></a>
-</div>
-{% elif not user.teacher.is_verified and user.is_authenticated %}
+   </div>
+   <h5 style="text-align: center;">Instrcutors Name: {{user.username}}</h5>
+   <!-- Start of the options -->
+   <div class="teacher-options">
+
+       <button class="option-elements" id="option-elements1"
+       data-bs-toggle="collapse" href="#collapseoption1" role="button" aria-expanded="false" aria-controls="collapseoption1" >
+          Course options 
+       </button>
+       <div class="collapse" id="collapseoption1" style="width: 16em;">
+        <div class="card" style="text-align: center;" >
+          <a class="teacher-option-links" href=""> 1. Update course</a>
+          <a class="teacher-option-links" href="{% url 'courses:createcourse' %}"> 2. Create course</a>
+          <button  id="showcourse" class="teacher-option-links" onclick="showcourses()" > 3. Show My Courses</button>
+        </div>
+      </div>
+
+       <button class="option-elements" id="option-elements2"
+       data-bs-toggle="collapse" href="#collapseoption2" role="button" aria-expanded="false" aria-controls="collapseoption2" >
+          Student analytics
+       </button>
+       <div class="collapse" id="collapseoption2" style="width: 16em;">
+        <div class="card" >
+          <a class="teacher-option-links" href=""> 1. Show Students</a>
+          <a class="teacher-option-links" href=""> 2. Student Queries</a>
+        </div>
+      </div>
+
+       <button class="option-elements" id="option-elements3"
+       data-bs-toggle="collapse" href="#collapseoption3" role="button" aria-expanded="false" aria-controls="collapseoption3" >
+          Assignments/ Tests
+       </button>
+       <div class="collapse" id="collapseoption3" style="width: 16em;">
+        <div class="card" >
+          <a class="teacher-option-links" href=""> 1. Create Question bank</a>
+          <a class="teacher-option-links" href=""> 2. Create Assignments</a>
+        </div>
+      </div>
+
+       <button class="option-elements" id="option-elements4"
+        data-bs-toggle="collapse" href="#collapseoption4" role="button" aria-expanded="false" aria-controls="collapseoption4" >
+          User Settings
+      </button>
+      <div class="collapse" id="collapseoption4" style="width: 16em;">
+        <div class="card" >
+          <a class="teacher-option-links" href=""> 1. Delete User</a>
+          <a class="teacher-option-links" href=""> 2. Change password</a>
+          <a class="teacher-option-links" href=""> 3. Change Profile-pic</a>
+        </div>
+      </div>
+
+
+   </div>
+   <!-- end of the options -->
+     <div style="display: flex;">
+      <a style="padding: 0.2em 0.4em; text-decoration: none;" href="">pinterest</a>
+      <a style="padding: 0.2em 0.4em; text-decoration: none;" href="">linkedIn</a>
+      <a style="padding: 0.2em 0.4em; text-decoration: none;" href="">blog</a>
+      <a style="padding: 0.2em 0.4em; text-decoration: none;" href="">portfolio</a>
+     </div>
+   </div>
+ {% endif %}
+ 
+ {% elif not user.teacher.is_verified and user.is_authenticated %}
 <div style="padding: 1em;"> 
 <br>
-<h3>You are not a verified teacher yet.</h3> So please wait until you are verified!
+<h3>You are not a verified teacher yet.</h3> 
+So please wait until you are verified!
 </div>
 {% else %}
-{%endif%}
+ You are not logged in!
+{% endif %}
 
-        </div><!--end of the options column -->
- </div>
+        </div><!--end of the teacher settings 1 -->
+ </div> <!-- End of the column 1 -->
 
-<div class="col-lg-8">
-        <div class="courses-made-teacher" style="background-color: rgb(224, 255, 245);
-        padding: 1em;">
+<div class="col-lg-9" id="teacher-dashboard-main-content"> <!-- start of the teacher black board column -->
+<!-- Start pasting from here --> 
+  <div style="text-align: center;">
+     <img style="width: 50vw; height: 25em;" src="{% static 'courses/photos/robot.gif' %}" alt="robot_img">
+     <br>
+     <a class="btn btn-dark" href=""> Click here for Guide</a>
+  </div>
+</div>
+</div>
+
+<script type="text/javascript">
+ var teach_dashboard1 = document.getElementById('teacher-dashboard-main-content')
+
+var dashboard_course = `<!-- Start pasting from here! -->
+<div class="courses-made-teacher" style="background-color: rgb(224, 255, 245); padding: 1em;">
         <h3 style="text-align: center;">Courses made by you</h3>
-
 <!-- start of the course list -->        
 <div style="padding:2em; margin:0px;" class="row">
     {% for course in courses %}
@@ -64,10 +134,16 @@
     {% endfor %}
 </div> <!-- end of the row -->
     
+</div> <!-- end of the teacher dashboard column --> ` /* end */
 
+function showcourses()
+{
+ 
+    teach_dashboard1.innerHTML = dashboard_course;
+    console.log("function executed! ");
+}
 
-    </div> <!-- end of the teacher dashboard column -->
-
-</div>
-</div>
+var button12 = document.getElementById('showcourse');
+button12.addEventListener('click', showcourses); 
+</script>
 {% endblock content %}

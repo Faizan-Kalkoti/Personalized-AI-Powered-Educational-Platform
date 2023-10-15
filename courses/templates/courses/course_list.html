@@ -2,16 +2,17 @@
 {% load static %}
 {% block content %}
 
-
-<div style="padding: 1em 2em;">
-  <h5> Find the course </h5>
+<div style="padding: 2em;">
+<div style="padding: 1em 1em; background-color: lightgrey; text-align:center;">
+  <!-- <h5> Find the course </h5> -->
   <form name="searchform" id="searchform" method="GET">
     <div class="column" style="justify-items:center;">
      {% comment %} {% csrf_token %} {% endcomment %}
-    <input type="textfield" name='name' placeholder=" Search course" style="padding: 0.3em 0em; margin-bottom:0px;">
+    <input type="textfield" name='name' placeholder=" Search course" style="padding: 0.3em 1em; padding-right: 6em; margin-bottom:0px;">
     <input type="submit" value="Search" class="btn btn-dark" style=" padding:0.36em 2em; margin:0px 1px; transform: translate(0px,-2px)">
     </div>
   </form>
+</div>
 </div>
 
 
@@ -37,5 +38,31 @@
 
 </div> <!-- end of the row -->
 
+<!-- For pagination of the courses -->
+<div class="row" style="background-color: rgb(231, 243, 255); margin:0px; bottom:0px; 
+padding: 1em; justify-content: center;">
+
+  <div class="col-lg-6" style="text-align: center;">
+    
+    {% if page_obj.has_previous %}
+    <span style="border: 1px solid black; padding: 0.5em 0.5em;">
+    <a href="?page=1"> first </a> </span>
+    <span style="border: 1px solid black; padding: 0.5em 0.5em;">
+    <a href="?page={{page_obj.previous_page_number}}"> << </a>
+    </span>
+    {% endif%}
+
+    <span style="border: 1px solid black; padding: 0.5em 1em;">  {{page_obj.number}} </span>
+    
+    {% if page_obj.has_next %}
+   <span style="border: 1px solid black; padding: 0.5em 0.5em;">
+    <a style="text-decoration: none;" href="?page={{page_obj.next_page_number}}"> >> </a> </span>
+    <span style="border: 1px solid black; padding: 0.5em 0.5em;">
+    <a style="text-decoration: none;" href="?page={{page_obj.paginator.num_pages}}"> last</a>
+   </span>
+    {% endif %}
+ 
+  </div>
+</div>
 
 {% endblock content %}

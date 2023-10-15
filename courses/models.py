@@ -21,6 +21,16 @@ class Course(models.Model):
     slug = models.SlugField()
     iscomplete = models.BooleanField(default=False)
 
+    Age_choices = [
+        ('Age < 10', 'Age <10'),
+        ('10 < Age < 15', '10 < Age < 15'),
+        ('15 < Age < 18','15 < Age < 18'),
+        ('Above 18', 'Above 18'),
+        ('For all ages', 'For all ages'),]
+    age_group = models.CharField(max_length=20, choices=Age_choices, default='For all ages')
+
+
+
 
     # for time in courses
     tz1 = pytz.timezone('Asia/Kolkata')

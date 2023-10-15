@@ -10,10 +10,15 @@ from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 from django import forms
-from accounts.models import Student, Teacher
 from courses.models import Course, Course_members
 from django.views.generic import (CreateView, RedirectView, UpdateView,
                                   ListView, DeleteView, DetailView)
+from accounts.models import Teacher, Student
+
+# for pagination
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+
+
 
 
 # Create your views here.
@@ -25,13 +30,17 @@ from django.views.generic import (CreateView, RedirectView, UpdateView,
 # 6. Detail of the courses.
 
 class CourseForm(forms.ModelForm):
+    course_description = forms.CharField(
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 50})
+    )
     class Meta:
         model = Course
-        fields = ('course_name', 'course_description', 'course_img')
+        fields = ('course_name', 'course_description', 'course_img', 'age_group')
         labels = {
             'course_name': 'Course Name',
             'course_description': 'Course Description',
             'course_img': 'Course Image',
+            'age_group': 'Age Group',
         }
 
 class CreateCourse(LoginRequiredMixin, CreateView):
@@ -63,6 +72,7 @@ class SingleCourse(DetailView):
 class ListCourse(ListView):
     model = Course
     template_name = 'courses/course_list.html'
+    paginate_by = 4
 
     def get_queryset(self):
         queryset = Course.objects.all()
@@ -72,7 +82,7 @@ class ListCourse(ListView):
            teacher1 = self.request.user.teacher
         except (ObjectDoesNotExist, AttributeError):
            teacher1 = None
-        print(teacher1)
+        # print(teacher1)
 
         if name:
             queryset = queryset.filter(course_name__contains=name)
@@ -96,18 +106,21 @@ class DeleteCourse(LoginRequiredMixin, DeleteView):
 
 class JoinCourse(LoginRequiredMixin, RedirectView):
     def get_redirect_url(self, *args, **kwargs):
-        return reverse("courses:single",kwargs={"slug": self.kwargs.get("slug")})
+        return reverse("courses:singlecourse",kwargs={"slug": self.kwargs.get("slug")})
 
     def get(self, request, *args, **kwargs):
         course = get_object_or_404(Course,slug=self.kwargs.get("slug"))
+        student = get_object_or_404(Student, name = self.request.user.username)
+        # print(student)
         try:
-            Course_members.objects.create(user=self.request.user,course=course)
+            Course_members.objects.create(student=student,course=course)
         except IntegrityError:
             messages.warning(self.request,("Warning, already a member of {}".format(course.course_name)))
         else:
             messages.success(self.request,"You are now a member of the {} group.".format(course.course_name))
 
         return super().get(request, *args, **kwargs)
+    
 
 
 class CourseCompleted(LoginRequiredMixin, RedirectView):

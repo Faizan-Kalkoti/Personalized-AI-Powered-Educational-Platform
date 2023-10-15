@@ -17,3 +17,55 @@
     box-shadow: 0em 0em 1em grey; 
     overflow:none;
 }
+
+
+/* Course detail styling */
+.course-detail-image{
+    border: 1px solid rgb(135, 135, 135);
+    background-color: rgb(255, 255, 255);
+    width: 20em; 
+    padding:1em; 
+    border-radius: 1em;
+}
+
+
+
+/* Teacher Dashboard css settings */
+.teacher-options{
+    padding: 1em 0.2em;
+}
+.option-elements{
+    padding: 0.4em 2em; 
+    border: 1px solid black; 
+    background-color: rgb(224, 224, 224); 
+    width: 16em;
+}
+
+.option-elements:hover{
+    background-color: white;
+}
+
+.teacher-option-links{
+    text-decoration: none;
+    color: black;
+    border: 1px solid grey;
+    padding:0.1em 0.5em;
+}
+
+.teacher-option-links:hover{
+    text-decoration: none;
+}
+
+@media (min-width: 300px) and (max-width: 600px) {
+    /* For coures detail page */
+    .course-detail-image{
+        width: 12em;
+    }   
+}
+
+@media (min-width: 100px) and (max-width: 300px) {
+    /* For coures detail page */
+    .course-detail-image{
+        width: 10em;
+    }   
+}

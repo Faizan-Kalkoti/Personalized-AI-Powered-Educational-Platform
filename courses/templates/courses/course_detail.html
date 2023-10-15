@@ -1,19 +1,60 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-<div style="padding: 1em;">
-    this is the courses detail page
-    <br> <br>
-{% if user.teacher.name == course.made_by_teacher.name %}
-  You made this course! <br>
+
+<div style="padding: 2em;">
+<div style="padding:1em 2em; background-color: rgb(252, 244, 232); border-radius: 1em;">
+  <div class="row">
+    <div class="col-lg-8">
+
+      <h2>This is {{course.course_name}}</h2> 
+      <h4>by {{ course.made_by_teacher}}</h4>
+      <br>
+     
+      <div class="row">
+       <div class="col-lg-6">
+         <p style="font-size: 1.2em; "> Course description:  
+           <span style="font-weight: 500;">{{course.course_description}}</span> 
+           <div>Students: {{course.student.count}}</div> </p>
+       </div>
+      </div>
+      <hr>
+
+    {% if user.teacher.name == course.made_by_teacher.name %}
     To delete this course: &nbsp
     <a class="btn btn-danger" href="{% url 'courses:deletecourse' slug=course.slug %}">Delete This course!</a>
-    <br><br>
-    <a class="btn btn-secondary" href="{% url 'courses:coursecompleted' slug=course.slug %}">Mark the course as completed
-    </a>
-{% else %}
-you did not make this course
-{% endif %}
+    <br>
+    {% if course.iscomplete == True %}
+    <a class="btn btn-secondary" href="">
+      Course Completed  </a>
+    {% else %}
+    <a class="btn btn-secondary" href="{% url 'courses:coursecompleted' slug=course.slug %}">
+      Mark the course as completed  </a>
+    {% endif %}
+    
+    {% else %}
+      {% if user.student and user.is_authenticated %}
+          {% if user.student in course.student.all  %}
+              <h4>You are a part of this course</h4>
+          {% else %}
+              <a class="btn btn-dark" href="{% url 'courses:joincourse' slug=course.slug %}"> Start Course </a>
+          {% endif %} 
+        
+      {% endif %}
+    {% endif %}
+
+    </div>
+    <div class="col-lg-4" style="text-align: center;">
+      <img class="course-detail-image"  src="{{course.course_img.url}}" alt="coures-image">
+    </div>
+  </div>
+
+</div> </div>
+
+
+<div style="padding: 1em;">
+    <br> <br>
+
 </div>
 
 
