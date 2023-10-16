@@ -148,6 +148,14 @@ class Courses_of_teacher(ListView):
         queryset = queryset.filter(made_by_teacher=teacher1)
         print(queryset)
         return queryset
+    
+
+class UpdateCourse(UpdateView):
+    model = Course
+    form_class = CourseForm
+    template_name = 'courses/update_course.html'
+    success_url = reverse_lazy('courses:allcourseslist')
+    
 
 
 

@@ -32,9 +32,9 @@
        </button>
        <div class="collapse" id="collapseoption1" style="width: 16em;">
         <div class="card" style="text-align: center;" >
-          <a class="teacher-option-links" href=""> 1. Update course</a>
-          <a class="teacher-option-links" href="{% url 'courses:createcourse' %}"> 2. Create course</a>
-          <button  id="showcourse" class="teacher-option-links" onclick="showcourses()" > 3. Show My Courses</button>
+          <a class="teacher-option-links" href="{% url 'courses:createcourse' %}"> 1. Create course</a>
+          <button  id="showcourse" class="teacher-option-links" onclick="showcourses()" > 2. Show My Courses</button>
+          <a class="teacher-option-links" href=""> 3. Delete all courses</a>
         </div>
       </div>
 
@@ -44,8 +44,10 @@
        </button>
        <div class="collapse" id="collapseoption2" style="width: 16em;">
         <div class="card" >
-          <a class="teacher-option-links" href=""> 1. Show Students</a>
-          <a class="teacher-option-links" href=""> 2. Student Queries</a>
+          <!-- <a class="teacher-option-links" href=""> 1. Show Students</a> -->
+          <button class="teacher-option-links" id="showgraphs"> 1. Show Students Graphs</button>
+          <button class="teacher-option-links">2. Student Queries </button>
+        <!-- <a class="teacher-option-links" href=""> 2. Student Queries</a> -->
         </div>
       </div>
 
@@ -100,9 +102,10 @@ So please wait until you are verified!
 <div class="col-lg-9" id="teacher-dashboard-main-content"> <!-- start of the teacher black board column -->
 <!-- Start pasting from here --> 
   <div style="text-align: center;">
+    
      <img style="width: 50vw; height: 25em;" src="{% static 'courses/photos/robot.gif' %}" alt="robot_img">
      <br>
-     <a class="btn btn-dark" href=""> Click here for Guide</a>
+     <a class="btn btn-dark" href=""> Click here for Guide / Docs</a>
   </div>
 </div>
 </div>
@@ -146,4 +149,12 @@ function showcourses()
 var button12 = document.getElementById('showcourse');
 button12.addEventListener('click', showcourses); 
 </script>
+
+
+
+<!-- For Graphs checkout -->
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
 {% endblock content %}

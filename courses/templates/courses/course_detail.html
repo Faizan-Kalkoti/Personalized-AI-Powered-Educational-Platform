@@ -27,6 +27,8 @@
     {% if course.iscomplete == True %}
     <a class="btn btn-secondary" href="">
       Course Completed  </a>
+      &nbsp &nbsp
+      <a class="btn btn-dark" href="{% url 'courses:updatecourse' slug=course.slug %}"> Update Course </a>
     {% else %}
     <a class="btn btn-secondary" href="{% url 'courses:coursecompleted' slug=course.slug %}">
       Mark the course as completed  </a>

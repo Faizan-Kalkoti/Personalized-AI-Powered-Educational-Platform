@@ -1,44 +1,3 @@
-// var teach_dashboard1 = document.getElementById('teacher-dashboard-main-content')
-
-// var dashboard_course = `<!-- Start pasting from here! -->
-// <div class="courses-made-teacher" style="background-color: rgb(224, 255, 245); padding: 1em;">
-//         <h3 style="text-align: center;">Courses made by you</h3>
-// <!-- start of the course list -->        
-// <div style="padding:2em; margin:0px;" class="row">
-//     {% for course in courses %}
-    
-//     <div class="col" style="margin-bottom: 1em; overflow-x: wrap;">
-//     <div class="card course-card" >
-//     <a href="{% url 'courses:singlecourse' slug=course.slug %}" alt="single-course"
-//      style="text-decoration:none; color: black; ">
-//         <img src="{{course.course_img.url}}" style="width: 18rem; height:10em;" class="card-img-top course-img" alt="coures image">
-//         <div class="card-body" style="margin-top: 0px; padding: 10px;">
-//           <p class="card-text" style="">
-//             <h5>{{course.course_name}}</h5>
-//             by {{course.made_by_teacher.name}}
-//         <br> at {{course.date_generated|date:"l, F j, Y"}}</p>
-//       </div>
-//     </a>
-//     </div>
-//     </div> <!--end of a card column-->
-//     {% endfor %}
-// </div> <!-- end of the row -->
-    
-// </div> <!-- end of the teacher dashboard column --> `; /* end */
-
-// function showcourses()
-// {
- 
-//     teach_dashboard1.innerHTML = dashboard_course;
-//     console.log("function executed! ");
-// }
-
-// var button12 = document.getElementById('showcourse');
-// button12.addEventListener('click', showcourses); 
-
-
-
-
 
 // To get the elements that will be collapsed - teacher options/ settings
 const buttonElement = document.querySelector('.option-elements');
@@ -80,3 +39,89 @@ buttonElement4.addEventListener('click', function () {
     const bsCollapse = new bootstrap.Collapse(collapseElement4);
     bsCollapse.toggle();
 });
+
+
+
+
+
+function showgraphs()
+{
+    document.getElementById('teacher-dashboard-main-content').innerHTML = ` <div style="text-align:center;"> Student Analytics </div> <div id="chart-container" style="border: 1px solid black; padding: 0.3em; width:fit-content;"></div>
+     <br> <canvas width="100" height="25" id="completionChart" ></canvas> `;
+
+    // D3.js for graphs
+
+const data = [10, 20, 30, 40, 190];
+const labels = ["A", "B", "C", "D", "E"]; // Labels for the bars
+
+// Set up chart dimensions
+const width = 400;
+const height = 200;
+const barWidth = width / data.length;
+
+// Create an SVG element for the chart
+const svg = d3.select("#chart-container")
+.append("svg")
+.attr("width", width)
+.attr("height", height);
+
+// Create and append rectangles for the bars
+svg.selectAll("rect")
+.data(data)
+.enter()
+.append("rect")
+.attr("x", (d, i) => i * barWidth)
+.attr("y", (d) => height - d)
+.attr("width", barWidth - 1)
+.attr("height", (d) => d)
+.attr("fill", "steelblue");
+
+// Add labels for each bar
+svg.selectAll("text")
+.data(labels)
+.enter()
+.append("text")
+.text((d, i) => labels[i]) // Use the labels array for text
+.attr("x", (d, i) => i * barWidth + barWidth / 2) // Center the text
+.attr("y", (d) => height - d - 5) // Adjust vertical position
+.attr("text-anchor", "middle") // Center align the text
+.attr("fill", "white"); // Text color
+
+
+
+// For chart.js
+const completedCount = 75; // Number of students who completed the course
+const notCompletedCount = 25; // Number of students who did not complete the course
+
+// Get the canvas element
+const ctx = document.getElementById("completionChart").getContext("2d");
+
+// Create a data object for the chart
+const data2 = {
+  labels: ["Completed", "Not Completed"],
+  datasets: [{
+    label: "Number of Students that have completed the course",
+    data: [completedCount, notCompletedCount],
+    backgroundColor: ["green", "red"],
+  }]
+};
+
+// Create a chart using Chart.js
+const myChart = new Chart(ctx, {
+  type: "bar",
+  data: data2,
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true,
+      },
+    },
+  },
+}); // End of chart.js graph
+
+}
+
+document.getElementById('showgraphs').addEventListener('click', showgraphs)
+
+
+

@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'bootstrap5',
     'accounts',
     'courses',
+    'sections',
+    'ckeditor',
 ]
 
 MIDDLEWARE = [
