@@ -56,6 +56,17 @@
     text-decoration: none;
 }
 
+/* Teacher dashboard graph styling */
+.col-graph{
+    text-align: center;
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    padding:1em 0em; 
+    padding-top: 0em;
+}
+
+
 @media (min-width: 300px) and (max-width: 600px) {
     /* For coures detail page */
     .course-detail-image{
