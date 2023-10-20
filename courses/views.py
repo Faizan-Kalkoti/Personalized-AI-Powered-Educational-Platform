@@ -149,6 +149,12 @@ class Courses_of_teacher(ListView):
         print(queryset)
         return queryset
     
+class Student_Dashboard(ListView):
+    model=Course
+    template_name='auth/student_dashboard.html'
+    context_object_name='courses'
+
+    
 
 class UpdateCourse(UpdateView):
     model = Course

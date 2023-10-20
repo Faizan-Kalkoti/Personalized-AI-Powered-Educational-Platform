@@ -17,4 +17,5 @@ urlpatterns = [
 
     # User's dashboard links here
     path('teacher-dashboard/', views.Courses_of_teacher.as_view(), name="teacher_dashboard"),
+    path('student-dashboard/', views.Student_Dashboard.as_view(), name="student_dashboard"),
 ]
