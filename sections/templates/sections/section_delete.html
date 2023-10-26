@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+
+<div class="row" style="margin:0px; justify-content:center; padding:2em; font-size:1.1em;">
+    <div class="col-lg-4">
+        <div style="padding:2em; background-color: lightgrey; border-radius: 1em;" >
+            <h4 style="text-align:center;"> Delete Section !</h4>
+            <br>
+              <div style="text-align:center;"> Are you sure you want to delete this section. </div>
+              <hr>
+              <p style="padding:0.5em; text-align:center;"> 
+              Section to be Deleted:  <strong> "{{section.section_name}}" </strong>
+              </p>
+            <hr>
+            <form method="POST" style="text-align:center;">
+            {% csrf_token %}
+            <a class="btn btn-dark" href="{% url 'courses:allcourseslist' %}">Cancel</a>
+            <input type='submit' value="Delete" class="btn btn-danger">
+            </form>
+        </div>
+        
+        
+    </div>
+</div>
+
+{% endblock content %}

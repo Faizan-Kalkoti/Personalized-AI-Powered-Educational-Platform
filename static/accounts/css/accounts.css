@@ -1,0 +1,109 @@
+.home-heading{
+    scale:1.4;
+}
+
+.home-base-row{
+    margin: 0px; 
+    padding: 8em 4em; 
+    justify-content: center;
+}
+
+
+.butn1{
+    padding: 0.5em 1em;
+    border-radius: 0.5em;
+    margin: 0px 0.5em;
+    width: 13em;
+    height: 3em;
+    font-size: 1.1em;
+    border: 2px solid rgb(166, 119, 255);
+    transition: 0.5s;
+    color: rgb(74, 27, 161);
+    text-shadow: -0.3em 0.3em 0.5em rgb(157, 140, 189);
+}
+
+.butn1:hover{
+    background-color:rgb(166, 119, 255);
+    color: white;
+    transition: 0.8s;
+    text-shadow: -0.3em 0.3em 0.5em rgb(74, 27, 161);
+    translate: 5px -5px;
+    box-shadow: -0.6em 0.6em 1em rgb(203, 175, 255);
+}
+
+.butn{
+    padding: 0.5em 1em;
+    border-radius: 0.5em;
+    margin: 0px 0.5em;
+    width: 10em;
+    height: 3em;
+    font-size: 1.1em;
+    background-color: rgb(61, 93, 190);
+    border: 2px solid rgb(61, 93, 190);
+    color: white;
+    text-shadow: -0.3em 0.3em 0.5em rgb(12, 48, 92);
+}
+
+.butn:hover{
+    color: white;
+    transition: 0.8s;
+    translate: 5px -5px;
+    border: 2px solid rgb(61, 93, 190);
+    text-shadow: -0.3em 0.3em 0.5em rgb(12, 48, 92);
+    background-color: rgb(61, 93, 190);
+    box-shadow: -0.6em 0.6em 1em  rgb(120, 152, 246);
+}
+
+.home-robot{
+    position: relative; 
+    top: 9em;  
+    right:-12em;
+    border: 0px;
+    background-color: transparent;
+    animation-name: hello-robot;
+    animation-delay: 1s;
+    animation-iteration-count: infinite;
+    animation-duration: 3s;
+    animation-timing-function: ease-in-out;
+    transition: 1s;
+}
+
+
+.rbt-text{
+    width: fit-content;
+    border: 1px solid rgb(185, 185, 185);
+    padding: 0.6em;
+    border-radius: 5px;
+    opacity: 0;
+    background-color: whitesmoke;
+    box-shadow: 0.5em 0.5em 1em lightgrey;
+    text-shadow: -0.2em 0.2em 0.2em grey;
+    transition: 1s;
+    margin-bottom: 0.5em;
+}
+
+
+@keyframes hello-robot {
+    0%{
+        top: 9em;
+    }
+    50%{
+        top: 8em;
+    }
+   
+    100%{
+        top: 9em;
+    }
+}
+
+
+@media (max-width: 600px)
+{
+    .home-heading{
+        scale:1;
+    }
+
+    .home-base-row{
+        padding: 2em;
+    }
+}

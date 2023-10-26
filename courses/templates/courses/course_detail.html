@@ -2,38 +2,49 @@
 {% load static %}
 {% block content %}
 
-<div style="padding: 2em;">
-<div style="padding:1em 2em; background-color: rgb(252, 244, 232); border-radius: 1em;">
+<div style="padding: 2em; padding-bottom: 0em;">
+<div style="padding:2em 2em; background-color: rgb(252, 244, 232); border-radius: 1em;">
   <div class="row">
     <div class="col-lg-8">
 
-      <h2>This is {{course.course_name}}</h2> 
-      <h4>by {{ course.made_by_teacher}}</h4>
-      <br>
+      <h2>Course Name: <span style="font-weight:400;"> {{course.course_name}} </span></h2> 
+      <h4> <b>By Instructor: </b> {{ course.made_by_teacher}}</h4>
+      <div style="font-size: 1.2em;"><b> Date of creation:</b> {{course.date_generated|date:"l, F j, Y"}} <br>
+          <b>Students no: </b> {{course.student.count}} </div> 
      
       <div class="row">
-       <div class="col-lg-6">
-         <p style="font-size: 1.2em; "> Course description:  
-           <span style="font-weight: 500;">{{course.course_description}}</span> 
-           <div>Students: {{course.student.count}}</div> </p>
+       <div class="col-lg-12">
+         <p style="font-size: 1.2em; "><b> Course description: - </b><br>
+           <span style="font-weight: 500;"> <i>{{course.course_description}} </i></span> </p>
        </div>
       </div>
       <hr>
 
     {% if user.teacher.name == course.made_by_teacher.name %}
-    To delete this course: &nbsp
-    <a class="btn btn-danger" href="{% url 'courses:deletecourse' slug=course.slug %}">Delete This course!</a>
-    <br>
-    {% if course.iscomplete == True %}
-    <a class="btn btn-secondary" href="">
-      Course Completed  </a>
-      &nbsp &nbsp
-      <a class="btn btn-dark" href="{% url 'courses:updatecourse' slug=course.slug %}"> Update Course </a>
-    {% else %}
-    <a class="btn btn-secondary" href="{% url 'courses:coursecompleted' slug=course.slug %}">
-      Mark the course as completed  </a>
-    {% endif %}
+       {% if course.iscomplete == True %}
+           <a class="btn btn-secondary" href="">
+            Course Completed  </a>
+       {% else %}
+           <a class="btn btn-secondary" href="{% url 'courses:coursecompleted' slug=course.slug %}">
+            Mark the course as completed  </a>
+       {% endif %}
+
+
+    <div class="btn-group" role="group">
+      <button type="button" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+        Course settings
+      </button>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" style="border:1px solid grey;" href="{% url 'courses:updatecourse' slug=course.slug %}">
+          1. Update Course</a></li>
+        <li><a class="dropdown-item" style="border:1px solid grey;" href="{% url 'courses:deletecourse' slug=course.slug %}">
+          2. Delete Course</a></li>
+        <li><a class="dropdown-item" style="border:1px solid grey;" href="{% url 'sections:createsection' slug=course.slug %}">
+          3. Create Section</a></li>
+      </ul>
+    </div>
     
+    <!-- For students -->
     {% else %}
       {% if user.student and user.is_authenticated %}
           {% if user.student in course.student.all  %}
@@ -53,11 +64,105 @@
 
 </div> </div>
 
+<div class="row" style="margin: 0px; padding:2em;" >
+  <div class="col-lg-6" style="background-color: whitesmoke; padding:1em;">
+    <h3 style="text-align:center;"> Sections </h3>
+  <hr>
 
-<div style="padding: 1em;">
-    <br> <br>
+{% if user.is_authenticated and user.student %}
 
+{% if user.student in course.student.all  %} <!-- if user has taken the course -->
+
+  {% for section in available_sections %}
+  <div style="background-color: lightblue; padding:0em 1em 1em; border:1px solid black; display: flex;
+     justify-content:space-between; align-items: center;">
+      <span style="padding: 1em 0em 0em 1em;">
+        {{ forloop.counter }}.  {{ section.section_name}} 
+      </span> 
+      <span style="padding: 1em 0em 0em 1em; color:red;">Available to you</span>
+      {% if user.teacher.name == course.made_by_teacher.name %}
+      <span style="padding: 1em 0em 0em 1em;">
+        <a class="btn btn-outline-danger" href="{% url 'sections:deletesection' slug=section.slug %}">
+          Delete Section
+        </a>
+        <a class="btn btn-outline-primary" href="">
+          Update Section
+        </a>
+      </span>
+      {% endif %}
+    </div>
+    {% endfor %} <!--End of 1st for loop --> <!--Available sections-->
+
+    {% for section in excluded_sections %}
+    <div style="background-color: lightgrey; padding:0em 1em 1em; border:1px solid black; display: flex;
+     justify-content:space-between; align-items: center;">
+      <span style="padding: 1em 0em 0em 1em;">
+        {{ forloop.counter }}.  {{ section.section_name }} 
+      </span>
+      <span style="padding: 1em 0em 0em 1em; color:red;">Not Available</span>
+      {% if user.teacher.name == course.made_by_teacher.name %}
+      <span style="padding: 1em 0em 0em 1em;">
+        <a class="btn btn-outline-danger" href="{% url 'sections:deletesection' slug=section.slug %}">
+          Delete Section
+        </a>
+        <a class="btn btn-outline-primary" href="">
+          Update Section
+        </a>
+      </span>
+      {% endif %}
+    </div>
+    {% endfor%} <!--end of second loop--> <!--Not Available sections-->
+  
+  {% else %} <!--If user has not taken the course -->
+
+  {% for section in sections %}
+    <div style="background-color: lightgrey; padding:0em 1em 1em; border:1px solid black; display: flex;
+     justify-content:space-between; align-items: center;">
+      <span style="padding: 1em 0em 0em 1em;">
+        {{ forloop.counter }}.  {{ section.section_name }} 
+      </span>
+      {% if user.teacher.name == course.made_by_teacher.name %}
+      <span style="padding: 1em 0em 0em 1em;">
+        <a class="btn btn-outline-danger" href="{% url 'sections:deletesection' slug=section.slug %}">
+          Delete Section
+        </a>
+        <a class="btn btn-outline-primary" href="">
+          Update Section
+        </a>
+      </span>
+      {% endif %}
+    </div>
+    {% endfor%} <!--end of second loop-->
+
+  {% endif %} <!--end of if-else of (student has taken course or not)-->
+
+{% else %} <!-- If user is not (authenticated-student) -->
+
+  {% for section in sections %}
+    <div style="background-color: lightgrey; padding:0em 1em 1em; border:1px solid black; display: flex;
+     justify-content:space-between; align-items: center;">
+      <span style="padding: 1em 0em 0em 1em;">
+        {{ forloop.counter }}.  {{ section.section_name }} 
+      </span>
+      {% if user.teacher.name == course.made_by_teacher.name %}
+      <span style="padding: 1em 0em 0em 1em;">
+        <a class="btn btn-outline-danger" href="{% url 'sections:deletesection' slug=section.slug %}">
+          Delete Section
+        </a>
+        <a class="btn btn-outline-primary" href="">
+          Update Section
+        </a>
+      </span>
+      {% endif %}
+    </div>
+    {% endfor%} <!--end of second loop-->
+
+  {% endif %} <!-- end of if-else for if user is (authenticated-student) -->
+
+  </div>
 </div>
 
+<script src="{% static 'accounts/js/bootstrap.bundle.min.js' %}"></script>
+ 
 
 {% endblock content %}

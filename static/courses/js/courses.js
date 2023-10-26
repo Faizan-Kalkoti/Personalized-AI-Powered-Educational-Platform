@@ -7,38 +7,51 @@ const buttonElement4 = document.querySelector('#option-elements4');
 
 // Get the collapse element 1
 const collapseElement = document.getElementById('collapseoption1');
-// Toggle the collapse when the button is clicked
-buttonElement.addEventListener('click', function () {
-    const bsCollapse = new bootstrap.Collapse(collapseElement);
-    bsCollapse.toggle();
-});
+// // Toggle the collapse when the button is clicked
+// buttonElement.addEventListener('click', function () {
+//     // const bsCollapse = new bootstrap.Collapse(collapseElement);
+//     // bsCollapse.toggle();
+//     if(collapseElement.classList.contains('show'))
+//     {
+//       collapseElement.classList.remove('show')
+//     }
+//     else{
+//       collapseElement.classList.add('show')
+//     }
+// });
+
+// function collapse1(){
+//   const collapseElement = document.getElementById('collapseoption1');
+//   const bsCollapse = new bootstrap.Collapse(collapseElement);
+//     bsCollapse.toggle();
+// }
 
 
-// Get the collapse element 1
-const collapseElement2 = document.getElementById('collapseoption2');
-// Toggle the collapse when the button is clicked
-buttonElement2.addEventListener('click', function () {
-    const bsCollapse = new bootstrap.Collapse(collapseElement2);
-    bsCollapse.toggle();
-});
+// // Get the collapse element 1
+// const collapseElement2 = document.getElementById('collapseoption2');
+// // Toggle the collapse when the button is clicked
+// buttonElement2.addEventListener('click', function () {
+//     const bsCollapse = new bootstrap.Collapse(collapseElement2);
+//     bsCollapse.toggle();
+// });
 
 
-// Get the collapse element 1
-const collapseElement3 = document.getElementById('collapseoption3');
-// Toggle the collapse when the button is clicked
-buttonElement3.addEventListener('click', function () {
-    const bsCollapse = new bootstrap.Collapse(collapseElement3);
-    bsCollapse.toggle();
-});
+// // Get the collapse element 1
+// const collapseElement3 = document.getElementById('collapseoption3');
+// // Toggle the collapse when the button is clicked
+// buttonElement3.addEventListener('click', function () {
+//     const bsCollapse = new bootstrap.Collapse(collapseElement3);
+//     bsCollapse.toggle();
+// });
 
 
-// Get the collapse element 1
-const collapseElement4 = document.getElementById('collapseoption4');
-// Toggle the collapse when the button is clicked
-buttonElement4.addEventListener('click', function () {
-    const bsCollapse = new bootstrap.Collapse(collapseElement4);
-    bsCollapse.toggle();
-});
+// // Get the collapse element 1
+// const collapseElement4 = document.getElementById('collapseoption4');
+// // Toggle the collapse when the button is clicked
+// buttonElement4.addEventListener('click', function () {
+//     const bsCollapse = new bootstrap.Collapse(collapseElement4);
+//     bsCollapse.toggle();
+// });
 
 
 
@@ -47,14 +60,15 @@ buttonElement4.addEventListener('click', function () {
 function showgraphs()
 {
     document.getElementById('teacher-dashboard-main-content').innerHTML = ` 
-  <div style="background: linear-gradient(rgba(236, 240, 243, 0.4), rgba(209,215,227, 0.4))">
+  <div style="background: linear-gradient(rgba(236, 240, 243, 0.4), rgba(209,215,227, 0.4));
+  padding: 0.5em 1em;">
      <div style="padding: 1em;"></div>
      <h3 style="text-align:center;">
      Student Analytics </h3> 
      <div class="row" style="margin:0px; padding: 2em 1em; border-radius: 1em;">
 
      <div class="col-lg-3 col-graph" >
-       <div style="width: 15em; height: 17.5em; border: 1px solid grey; padding: 0.5em; box-shadow: 1em 1em 2em rgb(200, 200, 200);
+       <div style="width: 15em; height: 17.5em; border: 1px solid grey; padding: 0.5em; box-shadow: -1em 1em 2em rgb(200, 200, 200);
         background-color: white; border-radius: 1em;"> 
           <div style="border-bottom: 1px solid grey; padding-bottom:5px;"> Students Capabilities </div> 
           <canvas id="studentChart" width="100" height="100"></canvas> 
@@ -62,14 +76,14 @@ function showgraphs()
      </div> 
      
      <div class="col-lg-6 mx-auto col-graph" >
-     <div style="width: 25em; height: 17.5em; border: 1px solid grey; padding: 0.5em; box-shadow: 1em 1em 2em rgb(200, 200, 200);
+     <div style="width: 25em; height: 17.5em; border: 1px solid grey; padding: 0.5em; box-shadow: -1em 1em 2em rgb(200, 200, 200);
      background-color: white; border-radius: 1em;"> 
      <div style="border-bottom: 1px solid grey; padding-bottom:5px;"> Course completed by students </div>
      <canvas width="25" height="15" id="completionChart" ></canvas> </div>
      </div>
 
     <div class="col-lg-3 col-graph" >
-    <div style="width: 15em; height: 17.5em; border: 1px solid grey; padding: 0.5em; box-shadow: 1em 1em 2em rgb(200, 200, 200);
+    <div style="width: 15em; height: 17.5em; border: 1px solid grey; padding: 0.5em; box-shadow: -1em 1em 2em rgb(200, 200, 200);
     background-color: white; border-radius: 1em;"> 
     <div style="border-bottom: 1px solid grey; padding-bottom:5px;"> Different student levels </div> 
      <canvas id="studentChart3" width="100" height="100"></canvas> </div>
@@ -80,7 +94,7 @@ function showgraphs()
       <div class="row" style="margin: 0px; justify-content:space-evenly; padding:0em 2em; align-items:center;">
          
          <div class="col-lg-7 col-graph">
-             <div style="width: 32em; height: 17.5em; border: 1px solid grey; padding: 0.5em; box-shadow: 1em 1em 2em rgb(200, 200, 200);
+             <div style="width: 32em; height: 17.5em; border: 1px solid grey; padding: 0.5em; box-shadow: -1em 1em 2em rgb(200, 200, 200);
               background-color: white; border-radius: 1em;"> 
                      <div style="border-bottom: 1px solid grey; padding-bottom:5px;">
                        Number of students per Course </div>
@@ -89,7 +103,7 @@ function showgraphs()
          </div>
 
          <div class="col-lg-5 col-graph">
-            <div style="width: 25em; height: 17.5em; border: 1px solid grey; padding: 0.5em; box-shadow: 1em 1em 2em rgb(200, 200, 200);
+            <div style="width: 25em; height: 17.5em; border: 1px solid grey; padding: 0.5em; box-shadow: -1em 1em 2em rgb(200, 200, 200);
              background-color: white; border-radius: 1em;">
                 <div style="border-bottom: 1px solid grey; padding-bottom:5px;">
                   Test Scores </div>
@@ -132,7 +146,7 @@ const pieChart = new Chart(ctx2, {
 
 
 // (2) - For chart.js
-const completedCount = 75; // Number of students who completed the course
+const completedCount = 45; // Number of students who completed the course
 const notCompletedCount = 25; // Number of students who did not complete the course
 
 // Get the canvas element

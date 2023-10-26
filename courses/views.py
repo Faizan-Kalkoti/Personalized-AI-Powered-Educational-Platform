@@ -43,6 +43,22 @@ class CourseForm(forms.ModelForm):
             'age_group': 'Age Group',
         }
 
+class UpdateForm(forms.ModelForm):
+    course_description = forms.CharField(
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 50})
+    )
+    class Meta:
+        model = Course
+        fields = ('course_name', 'course_description', 'course_img', 'age_group', 'iscomplete')
+        labels = {
+            'course_name': 'Course Name',
+            'course_description': 'Course Description',
+            'course_img': 'Course Image',
+            'age_group': 'Age Group',
+            'iscomplete': 'Status',
+        }
+
+
 class CreateCourse(LoginRequiredMixin, CreateView):
     form_class = CourseForm
     model = Course
@@ -68,6 +84,25 @@ class CreateCourse(LoginRequiredMixin, CreateView):
 class SingleCourse(DetailView):
     model = Course
     template_name = 'courses/course_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        # Access the slug of the current course
+        context['current_course_slug'] = self.object.slug
+        course1 = Course.objects.get(slug = self.object.slug)
+        sections = course1.contains_sections.all()
+        context['sections'] = sections
+        if hasattr(self.request.user, 'student'):
+           section_get = course1.contains_sections.filter(available_to_student=self.request.user.student)
+           section_exclude = course1.contains_sections.exclude(available_to_student=self.request.user.student)
+        else:
+           section_get = None
+           section_exclude = None
+        context['available_sections'] = section_get
+        context['excluded_sections'] = section_exclude
+        # print(section_get.first().section_name)
+        return context
 
 class ListCourse(ListView):
     model = Course
@@ -158,7 +193,7 @@ class Student_Dashboard(ListView):
 
 class UpdateCourse(UpdateView):
     model = Course
-    form_class = CourseForm
+    form_class = UpdateForm
     template_name = 'courses/update_course.html'
     success_url = reverse_lazy('courses:allcourseslist')
     

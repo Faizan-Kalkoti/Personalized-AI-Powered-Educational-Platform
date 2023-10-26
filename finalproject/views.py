@@ -36,5 +36,6 @@ def send_with_attachment(request):
     return render(request, 'index.html', d)
 
 
-
+def aboutview(request):
+    return render(request, 'about.html')
 

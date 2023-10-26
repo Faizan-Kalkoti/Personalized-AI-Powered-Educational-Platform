@@ -36,6 +36,11 @@ class Section(models.Model):
                 unique_slug = f"{base_slug}-{counter}"
                 counter += 1
             self.slug = unique_slug
+        if not self.belong_to_course:
+            if hasattr(self, 'course'):
+                self.belong_to_course = self.course
+            else:
+                raise ValueError("Course information not provided.")
         super().save(*args, **kwargs)
     
 

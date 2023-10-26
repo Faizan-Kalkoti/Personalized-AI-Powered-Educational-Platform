@@ -21,7 +21,9 @@
             <hr>
             <form method="POST" style="text-align:center;">
             {% csrf_token %}
-            <input type='submit' value="Delete" class="btn btn-danger">
+            <input type='submit' style="padding: 0.4em 1.5em;" value="DELETE" class="btn btn-danger"> 
+            <a class="btn btn-dark" style="padding: 0.4em 1.5em;" href="{% url 'courses:singlecourse' slug=course.slug %}">
+                CANCEL</a>
             </form>
         </div>
         

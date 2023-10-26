@@ -1,11 +1,17 @@
 from django.shortcuts import render
+from django.http import HttpResponseRedirect
+
 from django.db.models.query import QuerySet
 from django.db import IntegrityError
 from django.contrib.auth.mixins import LoginRequiredMixin
+from braces.views import SelectRelatedMixin
 from django.urls import reverse
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
+from django import forms
+
+from django.contrib.auth.decorators import login_required
 
 from courses.models import Course, Course_members
 from sections.models import Section, Section_completed, Available_sections
@@ -14,6 +20,16 @@ from accounts.models import Student, Teacher
 from django.views.generic import (CreateView, RedirectView, UpdateView,
                                   ListView, DeleteView, DetailView)
 
+
+class SectionForm(forms.ModelForm):
+   class Meta:
+      model = Section
+      fields = ('section_name', 'section_description', 'Difficulty' )
+      label = {
+         'section_name': 'Name of the section',
+         'section_description':'Description',
+         'Difficulty':'Set Difficulty',
+      }
 
 
 # Create your views here.
@@ -28,3 +44,65 @@ from django.views.generic import (CreateView, RedirectView, UpdateView,
 # 8. Section completed by student
 # 9. Section accessible to student
 
+
+class CreateSection(LoginRequiredMixin,SelectRelatedMixin , CreateView):
+   template_name = 'sections/section_form.html'
+   model = Section
+   form_class = SectionForm
+
+   def form_valid(self, form):
+        course_slug = self.kwargs.get('slug')
+        if course_slug:
+             try:
+                 course1 = Course.objects.get(slug=course_slug)
+                 form.instance.belong_to_course = course1
+             except Course.DoesNotExist:
+                 return HttpResponseRedirect('/error_url/')
+        slug = form.instance.slug
+        count = 1
+        while Course.objects.filter(slug=slug).exists():
+            slug = f"{form.instance.slug}-{count}"
+            count += 1
+            form.instance.slug = slug
+        return super().form_valid(form)
+   
+   def get_success_url(self):
+        course = self.kwargs.get('slug')
+        return reverse('courses:singlecourse', kwargs={'slug': course})
+   
+   
+   
+class DeleteSection(LoginRequiredMixin , DeleteView):
+    template_name='sections/section_delete.html'
+    model = Section
+    success_url = reverse_lazy('courses:allcourseslist')
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(slug = self.kwargs['slug'])
+    
+    def delete(self, *args, **kwargs):
+        return super().delete(*args, **kwargs)
+
+    
+
+
+# class ListSections(ListView):
+#     template_name = 'courses/course_detail.html'
+#     model = Section
+    # context_object_name = 'sections'
+
+    # def get_queryset(self):
+    #     queryset = Section.objects.all()
+    #     course_slug = self.kwargs.get('slug')
+
+    #     if course_slug:
+    #          try:
+    #              course1 = Course.objects.get(slug=course_slug)
+    #          except Course.DoesNotExist:
+    #              course1 = None
+
+    #     if course1:
+    #         queryset = Section.objects.filter(belong_to_course=course1)
+    #         print(queryset)
+    #     return queryset

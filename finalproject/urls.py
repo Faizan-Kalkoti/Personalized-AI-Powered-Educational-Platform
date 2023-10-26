@@ -25,11 +25,13 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls', namespace='accounts')),
     path('courses/', include('courses.urls', namespace='courses')),
+    path('sections/', include('sections.urls', namespace='sections')),
 
     # this are the base project related views
     path('', views.index, name='index'),
     path('django/', views.djangocontent, name='djangocontent'),
     path('email-attachment/', views.send_with_attachment, name="emailattachment"),
     path('django-email/', views.base, name='djangoemail'),
+    path('about/', views.aboutview, name='about'),
     # path('authentication/', include('registration.urls', namespace='registration')),
 ]+static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
