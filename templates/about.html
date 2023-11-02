@@ -2,6 +2,50 @@
 {% block content %}
 {% load static %}
 
-This is the about page for this website
+
+<div style="padding: 1em 1em;">
+    <div style="padding: 0.1em 3em ;">
+    <div class="row" style="padding: 1em; text-align: center; justify-content: center;
+    border-bottom: 1px solid grey;">
+        <h2 class="doc-title">Guide To Learner</h2>
+    </div>
+    </div>
+  <div class="row" style="margin: 0px; background-color: whitesmoke;">
+    <div class="col-lg-3" style="margin-right: 1px solid grey;">
+        <nav id="navbar-example3" class="h-100 flex-column align-items-stretch pe-4 border-end">
+            <nav class="nav nav-pills flex-column">
+              <a class="nav-link" href="#item-1">Get started</a>
+              <nav class="nav nav-pills flex-column">
+                <a class="nav-link ms-3 my-1" href="#item-1-1">Item 1-1</a>
+                <a class="nav-link ms-3 my-1" href="#item-1-2">Item 1-2</a>
+              </nav>
+              <a class="nav-link" href="#item-2">Item 2</a>
+              <a class="nav-link" href="#item-3">Item 3</a>
+              <nav class="nav nav-pills flex-column">
+                <a class="nav-link ms-3 my-1" href="#item-3-1">Item 3-1</a>
+                <a class="nav-link ms-3 my-1" href="#item-3-2">Item 3-2</a>
+              </nav>
+            </nav>
+          </nav>
+    </div>
+    <div class="col-lg-6">
+
+    </div>
+    <div class="col-lg-3">
+        <nav id="navbar-example3" class="h-100 flex-column align-items-stretch pe-4 border-end">
+            <nav class="nav nav-pills flex-column">
+              <a class="nav-link" href="#item-1">Users</a>
+              <a class="nav-link" href="#item-2">1. Student</a>
+              <a class="nav-link" href="#item-3">2. Teacher</a>
+              <a class="nav-link" href="#item-3">3. Admin</a>
+            </nav>
+          </nav>
+
+    </div>
+  </div>  <!-- end of the row -->
+
+</div>
+
+    <script src="{% static 'accounts/js/bootstrap.bundle.min.js' %}"></script>
 
 {% endblock %}
