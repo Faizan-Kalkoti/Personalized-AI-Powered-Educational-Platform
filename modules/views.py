@@ -19,9 +19,19 @@ from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
 
 
 
-# 1. CreateModule
-# 2. UpdateModule
-# 3. DeleteMudule
-# 4. DetailModule
+# # 1. CreateModule
+# class CreateModule(LoginRequiredMixin, CreateView):
+#     pass
 
-# Create your views here.
+# # 2. UpdateModule
+# class UpdateModule(LoginRequiredMixin, UpdateView):
+#     pass
+
+# # 3. DeleteModule
+# class DeleteModule(LoginRequiredMixin, DeleteView):
+#     pass
+
+# # 4. DetailModule
+# class DetailModule(LoginRequiredMixin, DetailView):
+#     pass
+
