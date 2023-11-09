@@ -7,4 +7,5 @@ urlpatterns=[
     path('create-section/<slug:slug>/',views.CreateSection.as_view(),name='createsection'),
     path('delete-section/<slug:slug>/', views.DeleteSection.as_view(), name='deletesection'),
     # path('list-sections/<slug:slug>/', views.ListSections.as_view(), name='listsection'),
+    path('update-section/<slug:course_slug>/section/<slug:section_slug>/', views.UpdateSection.as_view(), name='updatesection'),
 ]

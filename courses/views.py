@@ -13,7 +13,9 @@ from django import forms
 from courses.models import Course, Course_members
 from django.views.generic import (CreateView, RedirectView, UpdateView,
                                   ListView, DeleteView, DetailView)
+
 from accounts.models import Teacher, Student
+from modules.models import Module, Module_completed
 
 # for pagination
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
@@ -96,11 +98,15 @@ class SingleCourse(DetailView):
         if hasattr(self.request.user, 'student'):
            section_get = course1.contains_sections.filter(available_to_student=self.request.user.student)
            section_exclude = course1.contains_sections.exclude(available_to_student=self.request.user.student)
+        #    user_modules = Module.objects.filter(part_of_section = section_get)
+        #    user_modules = section_get.has_modules.all()
         else:
            section_get = None
            section_exclude = None
+        #    user_modules = None
         context['available_sections'] = section_get
         context['excluded_sections'] = section_exclude
+        # context['user_modules'] = user_modules
         # print(section_get.first().section_name)
         return context
 

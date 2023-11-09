@@ -2,13 +2,15 @@
 {% load static %}
 {% block content %}
 
-<div style="padding: 2em;">
-<div style="padding: 1em 1em; background-color: lightgrey; text-align:center;">
+<div style="padding: 0em 0em;">
+<div style="padding: 2em 1em; background: linear-gradient(to right, rgb(78,61,167), rgb(219,115,176)); 
+text-align:center; box-shadow:0em 0.5em 1.4em rgb(220,220,220); ">
   <!-- <h5> Find the course </h5> -->
   <form name="searchform" id="searchform" method="GET">
     <div class="column" style="justify-items:center;">
      {% comment %} {% csrf_token %} {% endcomment %}
-    <input type="textfield" name='name' placeholder=" Search course" style="padding: 0.3em 1em; padding-right: 6em; margin-bottom:0px;">
+    <input type="textfield" name='name' placeholder=" Search course" style="padding: 0.3em 1em; padding-right: 6em;
+    border-radius:5px; margin-bottom:0px;">
     <input type="submit" value="Search" class="btn btn-dark" style=" padding:0.36em 2em; margin:0px 1px; transform: translate(0px,-2px)">
     </div>
   </form>
@@ -16,7 +18,7 @@
 </div>
 
 
-<div style="padding:2em; margin:0px;" class="row">
+<div style="padding:4em 2em; margin:0px;" class="row">
 {% for course in object_list %}
 
 <div class="col-lg-3" style="margin-bottom: 2em;">
@@ -24,7 +26,7 @@
 <a href="{% url 'courses:singlecourse' slug=course.slug %}" alt="single-course"
  style="text-decoration:none; color: black; ">
     <img src="{{course.course_img.url}}" style="width: 18rem; height:10em;" class="card-img-top course-img" alt="coures image">
-    <div class="card-body" style="margin-top: 0px; padding: 10px;">
+    <div class="card-body" style="margin-top: 0px; padding: 15px; border-top: 1px solid lightgrey;">
       <p class="card-text" style="">
         <h5>{{course.course_name}}</h5>
         by {{course.made_by_teacher.name}}

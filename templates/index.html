@@ -27,10 +27,18 @@
                 <button class="butn1">
                    <h4> Start Learning</h4>
                 </button> </a>
+                {% if user.is_authenticated %}
+                <a style="text-decoration: none; color: white;" href="{% url 'accounts:logout' %}">
+                    <button class="butn">
+                       <h4> Logout</h4>
+                    </button></a>
+                {% else %}
                 <a style="text-decoration: none; color: white;" href="{% url 'accounts:login' %}">
-                <button class="butn">
-                   <h4> Login</h4>
-                </button></a>
+                    <button class="butn">
+                       <h4> Login</h4>
+                    </button></a>
+                {% endif %}
+                
             </div> 
     </div>
     <div class="col-lg-3">

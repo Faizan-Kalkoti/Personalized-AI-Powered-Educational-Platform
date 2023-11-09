@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'courses',
     'sections',
     'ckeditor',
+    'modules',
 ]
 
 MIDDLEWARE = [

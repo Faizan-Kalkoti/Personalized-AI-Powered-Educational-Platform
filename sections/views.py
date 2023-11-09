@@ -83,6 +83,22 @@ class DeleteSection(LoginRequiredMixin , DeleteView):
     
     def delete(self, *args, **kwargs):
         return super().delete(*args, **kwargs)
+    
+class UpdateSection(UpdateView):
+    template_name="sections/update_section.html"
+    model = Section
+    form_class = SectionForm
+    slug_field = 'slug'  # Specify the slug field used in your model
+
+    def get_object(self, queryset=None):
+        # Retrieve the Section instance based on the slug in the URL
+        section_slug = self.kwargs.get('section_slug')
+        return Section.objects.get(slug=section_slug)
+
+    def get_success_url(self):
+        course_slug = self.kwargs.get('course_slug')
+        print(course_slug)
+        return reverse('courses:singlecourse', kwargs={'slug': course_slug})
 
     
 

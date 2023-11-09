@@ -64,18 +64,45 @@
 
 </div> </div>
 
+{% if user.is_authenticated and user.student %}
+     {% if user.student in course.student.all  %} <!-- if user has taken the course -->
+     <div class="row" style="margin: 0px; padding:2em;" >
+      <div class="col-lg-6" style="background-color: whitesmoke; padding:1em;">
+        <h3 style="text-align:center;"> Recommended Sections </h3>
+        <hr>
+
+        <!-- Start of the sections in recommended -->
+        <div style="background-color: lightgrey; padding:0em 1em 1em; border:1px solid black; display: flex;
+     justify-content:space-between; align-items: center;">
+      <span style="padding: 1em 0em 0em 1em;">
+        {{ forloop.counter }}.  {{ section.section_name }} 
+        Section 1 (this is recommended)
+      </span>
+    </div>
+    <!-- end of the sections in recommended -->
+
+      </div>
+    </div>
+     {% endif %}
+{% endif %}
+<!-- end of the recommended section condition -->
+
+
+
 <div class="row" style="margin: 0px; padding:2em;" >
   <div class="col-lg-6" style="background-color: whitesmoke; padding:1em;">
     <h3 style="text-align:center;"> Sections </h3>
   <hr>
 
-{% if user.is_authenticated and user.student %}
-
-{% if user.student in course.student.all  %} <!-- if user has taken the course -->
-
+{% if user.is_authenticated and user.student %} <!-- if user is authenticated (1)-->
+  {% if user.student in course.student.all  %} <!-- if user has taken the course (2)-->
+    
   {% for section in available_sections %}
-  <div style="background-color: lightblue; padding:0em 1em 1em; border:1px solid black; display: flex;
-     justify-content:space-between; align-items: center;">
+  <a data-bs-toggle="collapse" href="#collapseExample" class="accordion-button"
+  aria-expanded="false" aria-controls="collapseExample" style="color:black; text-decoration:none;
+  background-color: lightblue; padding: 1em 1em; border:1px solid black; display: flex;
+     justify-content:space-between; align-items: center;"> 
+  <div>
       <span style="padding: 1em 0em 0em 1em;">
         {{ forloop.counter }}.  {{ section.section_name}} 
       </span> 
@@ -91,9 +118,21 @@
       </span>
       {% endif %}
     </div>
-    {% endfor %} <!--End of 1st for loop --> <!--Available sections-->
+  </a>
 
-    {% for section in excluded_sections %}
+  <!--Collapse section for each section-->
+  <div class="collapse" id="collapseExample" style="padding: 0em 1em;">
+    {% for module in section.has_modules.all %}
+    <div class="card card-body" style="border: 1px solid grey;">
+     {{forloop.counter}}. - {{module}}
+    </div>
+    {% endfor %}
+  </div>
+  <!--collapse section end-->
+{% endfor %} <!--End of 1st for loop -->
+<!--Available sections-->
+
+  {% for section in excluded_sections %}
     <div style="background-color: lightgrey; padding:0em 1em 1em; border:1px solid black; display: flex;
      justify-content:space-between; align-items: center;">
       <span style="padding: 1em 0em 0em 1em;">
@@ -111,16 +150,17 @@
       </span>
       {% endif %}
     </div>
-    {% endfor%} <!--end of second loop--> <!--Not Available sections-->
+  {% endfor%} <!--end of second loop--> 
+  <!--Not Available sections (ended) -->
   
-  {% else %} <!--If user has not taken the course -->
+{% else %} <!--If user has not taken the course (2) -->
 
-  {% for section in sections %}
-    <div style="background-color: lightgrey; padding:0em 1em 1em; border:1px solid black; display: flex;
-     justify-content:space-between; align-items: center;">
-      <span style="padding: 1em 0em 0em 1em;">
-        {{ forloop.counter }}.  {{ section.section_name }} 
-      </span>
+   {% for section in sections %}
+     <div style="background-color: lightgrey; padding:0em 1em 1em; border:1px solid black; display: flex;
+      justify-content:space-between; align-items: center;">
+       <span style="padding: 1em 0em 0em 1em;">
+         {{ forloop.counter }}.  {{ section.section_name }} 
+       </span>
       {% if user.teacher.name == course.made_by_teacher.name %}
       <span style="padding: 1em 0em 0em 1em;">
         <a class="btn btn-outline-danger" href="{% url 'sections:deletesection' slug=section.slug %}">
@@ -134,30 +174,73 @@
     </div>
     {% endfor%} <!--end of second loop-->
 
-  {% endif %} <!--end of if-else of (student has taken course or not)-->
+{% endif %} 
+ <!--end of if-else of (student has taken course or not) (2)-->
 
-{% else %} <!-- If user is not (authenticated-student) -->
+{% else %} <!-- If user is not (authenticated-student) (1) -->
+   
+<!-- If user is a teacher that has made the coures -->
+{% if user.teacher.name == course.made_by_teacher.name %}
+   {% for section in sections %}
+      <div style="color:black; text-decoration:none;
+         background-color: lightblue; padding: 1em 1em; border:1px solid black; display: flex;
+         justify-content:space-between; align-items: center;"> 
+          <button data-bs-toggle="collapse"  class="accordion-button" data-bs-target="#collapseExample{{ forloop.counter }}"
+           aria-expanded="false" aria-controls="collapseExample{{ forloop.counter }}." style="width: 25em; padding:0.5em 1em;">
+              <span style="padding: 1em 0.5em 0.5em 1em; margin: auto 0px; ">
+                  {{ forloop.counter }}.  {{ section.section_name}} 
+              </span> 
+          </button>
+          <span style="padding: 0em 1em;">
+            <a class="btn btn-outline-danger" href="{% url 'sections:deletesection' slug=section.slug %}">
+              <img src="{% static 'sections/photos/delete.png' %}" style="width: 1.2em;">
+            </a>
+            <a class="btn btn-outline-light" 
+            href="{% url 'sections:updatesection' course_slug=course.slug section_slug=section.slug %}">
+              <img src="{% static 'sections/photos/edit.png' %}" style="width: 1.2em;">
+            </a>
+            <a class="btn btn-outline-dark" href="">
+              Add Module
+            </a>
+          </span>
+        </div>
 
-  {% for section in sections %}
-    <div style="background-color: lightgrey; padding:0em 1em 1em; border:1px solid black; display: flex;
-     justify-content:space-between; align-items: center;">
-      <span style="padding: 1em 0em 0em 1em;">
-        {{ forloop.counter }}.  {{ section.section_name }} 
-      </span>
-      {% if user.teacher.name == course.made_by_teacher.name %}
-      <span style="padding: 1em 0em 0em 1em;">
-        <a class="btn btn-outline-danger" href="{% url 'sections:deletesection' slug=section.slug %}">
-          Delete Section
-        </a>
-        <a class="btn btn-outline-primary" href="">
-          Update Section
-        </a>
-      </span>
-      {% endif %}
-    </div>
-    {% endfor%} <!--end of second loop-->
+        <!--Collapse section for each section-->
+        <div class="collapse" id="collapseExample{{forloop.counter}}" style="padding: 0em 1em;">
+           {% for module in section.has_modules.all %}
+              <div style=" padding:0.7em 0.5em; border: 1px solid grey;">
+                <a style="color: black; text-decoration: none; padding:0em 0.5em;" href=""> 
+                  <span>
+                   {{forloop.counter}}. - {{module}} module
+                  </span> 
+                </a>
+                <span>
+                  <a class="btn btn-outline-primary" href="">
+                    Update
+                  </a>
+                  <a class="btn btn-outline-danger" href="">
+                    Delete
+                  </a>
+                <span>
+              </div>
+           {% endfor %} <!-- End of modules loop -->
+        </div>
+        <!--collapse section end-->
+      {% endfor %}
 
-  {% endif %} <!-- end of if-else for if user is (authenticated-student) -->
+{% else %} <!--If the person is not a teacher who has made the course -->
+   {% for section in sections %}
+     <div style="background-color: lightgrey; padding:0em 1em 1em; border:1px solid black; 
+                 display: flex; justify-content:space-between; align-items: center;">
+          <span style="padding: 1em 0em 0em 1em;">
+            {{ forloop.counter }}.  {{ section.section_name }} 
+          </span>
+     </div>
+   {% endfor%} <!--end of second loop-->  
+{% endif %}<!-- end of this condition (to check for teacher)-->
+
+{% endif %} 
+ <!-- end of if-else for if user is not (authenticated-student) (1) -->
 
   </div>
 </div>

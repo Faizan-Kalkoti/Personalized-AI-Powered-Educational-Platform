@@ -1,6 +1,6 @@
 .course-img{
     /* width:18rem; */
-    height:10em;
+    height: 10em;
     scale: 0.8;
 }
 
@@ -10,11 +10,11 @@
 }
 
 .course-card{
-    width:18rem; 
-    height: 18rem; 
+    width:19rem; 
+    height: 19rem; 
     border-radius:0.5em; 
     margin-bottom: 1em; 
-    box-shadow: 0em 0em 1em grey; 
+    box-shadow: 0em 1.5em 2em rgb(224, 224, 224); 
     overflow:none;
 }
 
