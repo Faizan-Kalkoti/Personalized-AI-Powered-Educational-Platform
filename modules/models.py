@@ -9,12 +9,13 @@ from courses.models import Course, Course_members
 from pytz import timezone
 from datetime import timedelta
 from django.utils import timezone
+from ckeditor.fields import RichTextField
 
 class Module(models.Model):
     id = models.AutoField(primary_key=True)
     module_name = models.CharField(max_length=100)
     module_video = models.FileField(blank=True, upload_to='videos/modules', null=True)
-    module_content = models.CharField(max_length=1000)
+    module_content = RichTextField(blank=True, null=True)
     module_image = models.ImageField(blank=True, upload_to='photos/modules')
     slug = models.SlugField()
    

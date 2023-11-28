@@ -1,0 +1,16 @@
+.module-image{
+    width: 100%; 
+    padding: 2em; 
+    border: 1px solid grey;
+    height: 50vh;
+}
+
+.module-selector{
+    padding: 0.2em 0.3em; 
+    border: 1px solid grey; 
+    background-color: cornsilk;
+}
+
+.module-selector:hover{
+    background-color: whitesmoke;
+}

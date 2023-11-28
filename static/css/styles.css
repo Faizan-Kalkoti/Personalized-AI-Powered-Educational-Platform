@@ -21,9 +21,7 @@
   animation-name: moverobot;
   animation-duration: 6s;
   animation-timing-function: linear;
-  /* animation-delay: 1s; */
   animation-iteration-count: infinite ; 
- 
   /* animation-play-state: running; */
 }
 
@@ -58,9 +56,43 @@
   }
 
 
+.infomation-div{
+    background-color: rgb(249, 249, 249); 
+    padding: 2em 2em; 
+    border-radius: 1em; 
+    box-shadow: 0em 1.5em 3em rgb(196, 159, 204, 0.5);
+}
+
+.infomation-div2{
+    background-color: rgb(249, 249, 249); 
+    padding: 2em 2em; 
+    border-radius: 1em; 
+    box-shadow: 0em 1.5em 3em rgb(161, 184, 249, 0.8);
+}
+
+.info-row{
+    padding: 2em 3em; 
+    margin: 0px;
+}
+
+.img-width{
+    width: 30em;
+}
+
+
+
+/* Styling for phone like interface dimensions */
 @media  only screen and (max-width: 600px) and (min-width: 150px){
     .login_robot{
         height: 12em; 
+    }
+
+    .info-row{
+        padding: 0em;
+    }
+
+    .img-width{
+        width:22em;
     }
 
     @keyframes moverobot {
@@ -92,4 +124,8 @@
         }   
       }
 
+
+
 }
+
+

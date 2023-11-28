@@ -10,8 +10,8 @@
         {% csrf_token %}
         {% bootstrap_form form %}
         <div style="text-align:center;"> 
-         <input type="submit" class="btn btn-dark" value="Update Section">
-         <a class="btn btn-warning" 
+         <input type="submit" class="btn btn-warning" value="Update Section">
+         <a class="btn btn-dark" 
            href="{% url 'courses:singlecourse' slug=section.belong_to_course.slug %}">
            Cancel</a>
         </div>

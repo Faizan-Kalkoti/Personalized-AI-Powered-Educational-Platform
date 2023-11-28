@@ -26,6 +26,7 @@ urlpatterns = [
     path('accounts/', include('accounts.urls', namespace='accounts')),
     path('courses/', include('courses.urls', namespace='courses')),
     path('sections/', include('sections.urls', namespace='sections')),
+    path('modules/', include('modules.urls', namespace='modules')),
 
     # this are the base project related views
     path('', views.index, name='index'),

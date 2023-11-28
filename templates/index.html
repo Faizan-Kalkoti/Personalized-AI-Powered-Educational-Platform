@@ -49,11 +49,86 @@
 <div>
     <img style="width: 100%; height: 8em;" src="{% static 'accounts/photos/flow3.gif' %}" alt="">
 </div>
-<div style="padding:2em;"></div>
+<div style="padding:1em;"></div>
 
 
-<div style="padding:1em;">
 
+<!-- home page design -->
+<!-- first row of the description-->
+<div style="padding: 0em 2em;">
+<div class="row info-row" >
+    <div class="col-lg-6" style="padding: 1em 4em; align-items: center; display: flex; 
+    flex-direction: column; justify-content: center;">
+       <div class="infomation-div" > <h2>Personalized Periodic Test</h2>
+        <p style="font-size: 1.2em; text-align: justify; justify-content: space-evenly;">
+            Customized assessments matching your pace and proficiency. 
+            Tailored questions, formats, and weekly tests align with your goals, 
+            ensuring targeted learning and progress.
+        </p></div>
+    </div>
+    <div class="col-lg-6" style="padding: 3em; align-items: center;">
+        <img class="img-width" src="{% static 'photos/test.png' %}" alt="">
+        
+    </div>
+    <!-- [1] First row ended -->
+
+    <!-- [2] Second row ended -->
+    <div class="row info-row" >
+        <div class="col-lg-6" style="padding: 1em 4em; align-items: center; display: flex; 
+        flex-direction: column; justify-content: center;">
+        <img class="img-width" src="{% static 'photos/feedback.png' %}" alt=""> 
+        </div>
+        <div class="col-lg-6" style="padding: 3em; align-items: center;
+        align-items: center; display: flex; flex-direction: column; justify-content: center;">
+            <div class="infomation-div2" > <h2>Immediate Feedback Mechanism</h2>
+                <p style="font-size: 1.2em; text-align: justify; justify-content: space-evenly;">
+                    Real-time insights, powered by AI. Instant NLP feedback and personalized recommendations,
+                     directly from your test results. Elevate your learning with AI-driven feedback, 
+                     delivered seamlessly through our website.
+                </p></div>
+    </div>
+    <!-- [2] end of the second row-->
+
+
+    <!--[3] third row started -->
+    <div class="row info-row" >
+        <div class="col-lg-6" style="padding: 1em 4em; align-items: center; display: flex; 
+        flex-direction: column; justify-content: center;">
+           <div class="infomation-div" > <h2>Learn Effeciently with Adaptive Deadline Management</h2>
+            <p style="font-size: 1.2em; text-align: justify; justify-content: space-evenly;">
+                Navigate your learning path with precision. Harnessing predictive analytics and adaptive 
+                learning powered by machine learning, we personalize your journey, ensuring timely 
+                success through tailored suggestions and real-time adjustments. 
+            </p></div>
+        </div>
+        <div class="col-lg-6" style="padding: 3em; align-items: center;">
+            <img class="img-width" src="{% static 'photos/adaptive.png' %}" alt="">
+            
+        </div>
+        <!-- [3] third row ended -->
+
+    
+
+</div>
+
+<!-- End of the first row-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
 {% if user.is_authenticated and user.teacher.is_type == 'teacher' and user.teacher.is_verified == True %}
     <h2> This is a teacher signed in and verified </h2>
 {% elif user.is_authenticated and user.teacher.is_type == 'teacher' and user.teacher.is_verified == False %}
@@ -69,7 +144,8 @@
     {% endif %}
 {% endif %}
 
-    <div class="hello">
+
+<div class="hello">
         This is the html view to check if the project is working properly
        </div>
         <br>
@@ -93,12 +169,13 @@
         </form>
         <br>
         {{email}}<hr><br>
-        <br> <!--Email with attachment-->
+        <br> Email with attachment
         <a href="{% url 'emailattachment' %}" class="btn btn-warning">
             send email with attachment!
         </a>
         <br> {{attachment}}
-    </div>
+</div> 
+-->
     
  <script src="{% static 'js/boot/bootstrap.min.js' %}"></script>
 <script src="{% static 'js/boot/popper.min.js' %}"></script>

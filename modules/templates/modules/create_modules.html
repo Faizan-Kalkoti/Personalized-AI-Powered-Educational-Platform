@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap5 %}
+{% block content %}
+{% if user.teacher.name == course.made_by_teacher.name %}
+
+
+<div class="row" style="margin:0px; padding: 2em;">
+<div class="col-lg-6">
+<div style="padding:2em; background-color: lightgrey;">
+    <h3 style="text-align: center;"> Add Modules</h3>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.media}}
+        {% bootstrap_form form %}
+        <div style="text-align:center;"> 
+        <input type="submit" class="btn btn-dark" value="Create Modules"> 
+       <button class="btn btn-outline-danger" type="button"
+        onclick="goBack()">
+        Cancel</button></div>
+    </form>
+</div></div>
+</div>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+
+{% else %}
+
+<div style="padding:2em;">
+<h1> You are not authorized to view this page! </h1> </div>
+
+{% endif %}
+{% endblock %}

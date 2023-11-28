@@ -3,18 +3,18 @@
 {% block content %}
 
 <div style="padding: 2em; padding-bottom: 0em;">
-<div style="padding:2em 2em; background-color: rgb(252, 244, 232); border-radius: 1em;">
+<div style="padding:2em 2em; background: linear-gradient(to top right, rgb(30,30,30),rgb(50,50,50) ); border-radius: 1em; color:white;">
   <div class="row">
     <div class="col-lg-8">
 
       <h2>Course Name: <span style="font-weight:400;"> {{course.course_name}} </span></h2> 
       <h4> <b>By Instructor: </b> {{ course.made_by_teacher}}</h4>
       <div style="font-size: 1.2em;"><b> Date of creation:</b> {{course.date_generated|date:"l, F j, Y"}} <br>
-          <b>Students no: </b> {{course.student.count}} </div> 
+          <b>Enrolled students: </b> <span style="color: azure;"> {{course.student.count}} </span></div> 
      
       <div class="row">
        <div class="col-lg-12">
-         <p style="font-size: 1.2em; "><b> Course description: - </b><br>
+         <p style="font-size: 1.2em; color:lightgrey;"><b> Course description: - </b><br>
            <span style="font-weight: 500;"> <i>{{course.course_description}} </i></span> </p>
        </div>
       </div>
@@ -68,7 +68,7 @@
      {% if user.student in course.student.all  %} <!-- if user has taken the course -->
      <div class="row" style="margin: 0px; padding:2em;" >
       <div class="col-lg-6" style="background-color: whitesmoke; padding:1em;">
-        <h3 style="text-align:center;"> Recommended Sections </h3>
+        <h3 style="text-align:center;"> Revision Sections </h3>
         <hr>
 
         <!-- Start of the sections in recommended -->
@@ -89,6 +89,9 @@
 
 
 
+
+
+<!-- Start of the normal sections -->
 <div class="row" style="margin: 0px; padding:2em;" >
   <div class="col-lg-6" style="background-color: whitesmoke; padding:1em;">
     <h3 style="text-align:center;"> Sections </h3>
@@ -107,26 +110,19 @@
         {{ forloop.counter }}.  {{ section.section_name}} 
       </span> 
       <span style="padding: 1em 0em 0em 1em; color:red;">Available to you</span>
-      {% if user.teacher.name == course.made_by_teacher.name %}
-      <span style="padding: 1em 0em 0em 1em;">
-        <a class="btn btn-outline-danger" href="{% url 'sections:deletesection' slug=section.slug %}">
-          Delete Section
-        </a>
-        <a class="btn btn-outline-primary" href="">
-          Update Section
-        </a>
-      </span>
-      {% endif %}
     </div>
   </a>
+  
 
   <!--Collapse section for each section-->
   <div class="collapse" id="collapseExample" style="padding: 0em 1em;">
-    {% for module in section.has_modules.all %}
+    {% for module in section.has_modules.all %} <!-- modules loop started -->
     <div class="card card-body" style="border: 1px solid grey;">
-     {{forloop.counter}}. - {{module}}
+    <a style="color: black; text-decoration: none; padding:0em 0.5em;" 
+    href="{% url 'modules:detailmodule' course_slug=course.slug section_slug=section.slug slug=module.slug %}"> 
+     {{forloop.counter}}. - {{module}} </a> 
     </div>
-    {% endfor %}
+    {% endfor %} <!-- loop for modules in a section ended -->
   </div>
   <!--collapse section end-->
 {% endfor %} <!--End of 1st for loop -->
@@ -139,7 +135,7 @@
         {{ forloop.counter }}.  {{ section.section_name }} 
       </span>
       <span style="padding: 1em 0em 0em 1em; color:red;">Not Available</span>
-      {% if user.teacher.name == course.made_by_teacher.name %}
+      <!-- {% comment %} {% if user.teacher.name == course.made_by_teacher.name %}
       <span style="padding: 1em 0em 0em 1em;">
         <a class="btn btn-outline-danger" href="{% url 'sections:deletesection' slug=section.slug %}">
           Delete Section
@@ -148,10 +144,14 @@
           Update Section
         </a>
       </span>
-      {% endif %}
+      {% endif %} {% endcomment %} -->
     </div>
   {% endfor%} <!--end of second loop--> 
   <!--Not Available sections (ended) -->
+
+
+
+
   
 {% else %} <!--If user has not taken the course (2) -->
 
@@ -199,7 +199,7 @@
             href="{% url 'sections:updatesection' course_slug=course.slug section_slug=section.slug %}">
               <img src="{% static 'sections/photos/edit.png' %}" style="width: 1.2em;">
             </a>
-            <a class="btn btn-outline-dark" href="">
+            <a class="btn btn-outline-dark" href="{% url 'modules:createmodule' course_slug=course.slug section_slug=section.slug %}">
               Add Module
             </a>
           </span>
@@ -209,7 +209,8 @@
         <div class="collapse" id="collapseExample{{forloop.counter}}" style="padding: 0em 1em;">
            {% for module in section.has_modules.all %}
               <div style=" padding:0.7em 0.5em; border: 1px solid grey;">
-                <a style="color: black; text-decoration: none; padding:0em 0.5em;" href=""> 
+                <a style="color: black; text-decoration: none; padding:0em 0.5em;" 
+                href="{% url 'modules:detailmodule' course_slug=course.slug section_slug=section.slug slug=module.slug %}"> 
                   <span>
                    {{forloop.counter}}. - {{module}} module
                   </span> 

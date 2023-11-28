@@ -149,3 +149,15 @@ EMAIL_USE_SSL = False
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+# For CKeditor
+CKEDITOR_UPLOAD_PATH = 'uploads/'
+CKEDITOR_UPLOAD_PREFIX = 'media/uploads/'
+
+CKEDITOR_CONFIGS ={
+    'default':{
+        'height': 300,
+        'width': 'auto',
+        'removePlugins' :"exportpdf",
+    }
+}

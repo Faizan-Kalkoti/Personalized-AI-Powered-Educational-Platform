@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+{% if user.is_authenticated %}
+   {% if user.student in course.student.all or user.teacher.name == course.made_by_teacher.name %} 
+<!--[1] Start of the first row-->
+<div class="row" style="margin: 0px; padding: 2em; justify-content: center;
+background: linear-gradient(to top right, #141E30,#28416F); box-shadow: 0em 2em 2em rgb(234, 233, 233);">
+<a style="text-decoration: none; color: lightgrey;"
+href="{% url 'courses:singlecourse' slug=course.slug %}">
+    <h2 style="text-align: left; color:white;">
+        Course: {{module.belong_to_course.course_name}}
+    </h2> <h4>
+    by {{module.belong_to_course.made_by_teacher}}</h4>
+</a>
+</div>
+<div style="padding: 1em 3em;"></div><br>
+<!--[1] End of the first row -->
+
+<!-- [2] Start of the module row -->
+<div class="row" style="margin: 0px; padding:1em; justify-content:space-evenly">
+    
+    <!-- (1) Start of the first column -->
+    <div class="col-lg-2" style="box-shadow: 0.5em 0.5em 1em rgb(229, 229, 229); border: 1px solid lightgrey;
+    text-align: center; padding: 1.5em 1.5em; border-radius: 0.3em; margin: 0em 1em;
+    background: linear-gradient(to top right, #1c1c1c, #3c3c3c);">
+
+    <a style="text-decoration: none; color: black;" href="">
+        <p style="background: linear-gradient(to top right, #3F3244,  rgb(145, 137, 240)); border: 1px solid grey; border-radius: 0.3em;
+        padding: 0.5em 1em; color: white; border: 2px solid white;">
+           <b style="letter-spacing: 1px; font-size: 1.3em;"> {{module.part_of_section.section_name}} </b>
+        </p>
+    </a>
+
+     <span style="color:white; font-weight: 500; font-size: 1.2em;">Modules  </span>
+     <br> <br>
+     <!-- <div style="background-color: #3c3c3c; padding: 0.4em; box-shadow: 0.2em 0.2em 0.5em rgba(174, 174, 174, 0.4);"> -->
+        {% for modules in section.has_modules.all %}
+        <a style="text-decoration: none; color: darkblue;"
+        href="{% url 'modules:detailmodule' course_slug=course.slug section_slug=section.slug slug=modules.slug %}">
+          <p class="module-selector" >
+              Module : {{forloop.counter}}
+          </p>
+        </a>
+        {% endfor %}
+      </div>
+    <!-- </div>  --> 
+    <!-- (1) End of the first column-->
+
+
+
+    <!-- Second Column for Module (content) -->
+    <div class="col-lg-8" style="border: 1px solid lightgrey; box-shadow: 1em 1em 1em lightgrey; padding: 1.5em; border-radius: 1em;">
+        <h2 style="text-align: center;">
+            Title: {{module.module_name}}</h2><hr>
+            <div style="text-align: center; padding: 3em;">
+                <img class="module-image" src="{{module.module_image.url}}" alt="">
+            </div>
+            <div style="padding: 0.5em;">
+                {{module.module_content|safe}}
+            </div>
+
+            <hr>
+            <div>
+                <h5 style="text-align: center;">Here is the video explanation</h5>
+                {% if module.module_video %}
+                <div style="padding:0.5em 2em;">
+                   <video width="100%" controls>
+                      <source src="{{module.module_video.url}}" type="video/mp4">
+                   </video>
+                </div>
+                {% else %}
+                <hr>
+                <p style="text-align: center;">
+                No Video</p>
+                {% endif %}
+            </div>
+            
+    </div>
+    <!--ENd of the second column -->
+
+</div>
+<!-- [2] End of the module row-->
+   {% endif %}
+{% endif %}
+
+
+{% endblock content %}
