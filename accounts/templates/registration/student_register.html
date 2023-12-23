@@ -13,7 +13,7 @@
 <div style="padding: 2em;">
     <div class="row" style="margin: 0px;">
         <div class="col-lg-6">
-            <div class="container cont" style="padding:2em; background-color: #fee7e7; border-radius: 2em;">
+            <div class="container cont" style="padding:2em; background:linear-gradient(to bottom right, #f3e2e2, #d4b7b7) ; border-radius: 2em;">
                 <h1 style="text-align: center;">Sign up as a Student</h1>
                 
                     {% csrf_token %}
@@ -21,9 +21,7 @@
                     {% bootstrap_form student_form %}
                     <div style="text-align: center;">
                         <button id="startformbtn"  class="btn btn-dark" style="padding:0.5em 2em;" type="button">Sign Up</button>
-                    </div> <!--onclick="Fill_the_values()"-->
-
-                
+                    </div> <!--onclick="Fill_the_values()"--> 
             </div>
         </div>
 
