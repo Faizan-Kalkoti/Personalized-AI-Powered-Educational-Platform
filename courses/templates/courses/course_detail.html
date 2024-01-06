@@ -63,37 +63,42 @@
   </div>
 
 </div> </div>
-
-{% if user.is_authenticated and user.student %}
-     {% if user.student in course.student.all  %} <!-- if user has taken the course -->
-     <div class="row" style="margin: 0px; padding:2em;" >
-      <div class="col-lg-6" style="background-color: whitesmoke; padding:1em;">
-        <h3 style="text-align:center;"> Revision Sections </h3>
-        <hr>
-
-        <!-- Start of the sections in recommended -->
-        <div style="background-color: lightgrey; padding:0em 1em 1em; border:1px solid black; display: flex;
-     justify-content:space-between; align-items: center;">
-      <span style="padding: 1em 0em 0em 1em;">
-        {{ forloop.counter }}.  {{ section.section_name }} 
-        Section 1 (this is recommended)
-      </span>
-    </div>
-    <!-- end of the sections in recommended -->
-
-      </div>
-    </div>
-     {% endif %}
-{% endif %}
-<!-- end of the recommended section condition -->
-
-
+<!--End of the course introduction -->
 
 
 
 <!-- Start of the normal sections -->
 <div class="row" style="margin: 0px; padding:2em;" >
-  <div class="col-lg-6" style="background-color: whitesmoke; padding:1em;">
+<!-- Start of the new row (main) -->
+
+<!-- Modal Start -->
+<div class="modal fade" id="LevelSectionModal" data-bs-backdrop="static" style="padding: 1em;"
+data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <h1 class="fs-3" id="Modal_level_title" style="text-align: center; padding-top: 1em;">
+        Easy Level Sections
+      </h1>
+      <hr>
+      <div class="modal-body">
+        I am within the modal
+      </div>
+      <div style="text-align: center; padding-bottom: 1em;" >
+        <hr>
+        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End of the modal for the course sections for each level -->
+
+
+
+<div class="col-lg-6" style="background-color: whitesmoke; padding:1em;">
+<!-- Start of the first main column -->
     <h3 style="text-align:center;"> Sections </h3>
   <hr>
 
@@ -125,9 +130,9 @@
     {% endfor %} <!-- loop for modules in a section ended -->
   </div>
   <!--collapse section end-->
-{% endfor %} <!--End of 1st for loop -->
-<!--Available sections-->
+{% endfor %} <!--End of 1st for loop (section loop) -->
 
+  <!--Not Available sections-->
   {% for section in excluded_sections %}
     <div style="background-color: lightgrey; padding:0em 1em 1em; border:1px solid black; display: flex;
      justify-content:space-between; align-items: center;">
@@ -135,16 +140,6 @@
         {{ forloop.counter }}.  {{ section.section_name }} 
       </span>
       <span style="padding: 1em 0em 0em 1em; color:red;">Not Available</span>
-      <!-- {% comment %} {% if user.teacher.name == course.made_by_teacher.name %}
-      <span style="padding: 1em 0em 0em 1em;">
-        <a class="btn btn-outline-danger" href="{% url 'sections:deletesection' slug=section.slug %}">
-          Delete Section
-        </a>
-        <a class="btn btn-outline-primary" href="">
-          Update Section
-        </a>
-      </span>
-      {% endif %} {% endcomment %} -->
     </div>
   {% endfor%} <!--end of second loop--> 
   <!--Not Available sections (ended) -->
@@ -243,6 +238,11 @@
 {% endif %} 
  <!-- end of if-else for if user is not (authenticated-student) (1) -->
 
+
+
+
+
+
  <!-- All the copied content here -->
  <!--Start of the main game -->
  <div class="row" style=" margin: 0%; justify-content: center; background-color: rgb(255, 218, 218); 
@@ -255,7 +255,8 @@ padding:2em 0em;"> <!-- dont copy this-->
     <div class="row" style="justify-content: left; padding: 0em 1em; margin: 0px;">
         <div class="col-lg-6" style="text-align: center; border-right: 2px solid black;">
     
-            <a style="padding: 1em; text-decoration: none;" href="">
+            <a style="padding: 1em; text-decoration: none;"
+            data-bs-toggle="modal" data-bs-target="#LevelSectionModal">
                 <h4>Easy Level - Sections</h4>
                 <div>
                     <img style="width: 10em;" src="{% static 'courses/photos/level_1.png' %}" alt="img1">
@@ -275,7 +276,8 @@ padding:2em 0em;"> <!-- dont copy this-->
         </div>
         <div class="col-lg-6"  style="text-align: center; border-left: 2px solid black;">
 
-            <a style="padding: 1em; text-decoration: none;" href="">
+            <a style="padding: 1em; text-decoration: none;" 
+            data-bs-toggle="modal" data-bs-target="#LevelSectionModal">
                 <h4>Medium Level - Sections</h4>
                 <div>
                     <img style="width: 10em;" src="{% static 'courses/photos/level_2.png' %}" alt="img1">
@@ -293,7 +295,8 @@ padding:2em 0em;"> <!-- dont copy this-->
     <div class="row" style="justify-content: left; padding:0em 1em; margin: 0px;">
         <div class="col-lg-6"  style="text-align: center; border-right: 2px solid black;">
 
-            <a style="padding: 1em; text-decoration: none;" href="">
+            <a style="padding: 1em; text-decoration: none;" 
+            data-bs-toggle="modal" data-bs-target="#LevelSectionModal">
                 <h4>Hard Level - Sections</h4>
                 <div>
                     <img style="width: 10em;" src="{% static 'courses/photos/level_3.png' %}" alt="img1">
@@ -309,11 +312,11 @@ padding:2em 0em;"> <!-- dont copy this-->
 
 
     <div class="row" style="justify-content: right; padding:0em 1em; margin: 0px;">
-        <div class="col-lg-1" style="border-right: 0.2em solid black;">
-        </div>
+        <div class="col-lg-1" style="border-right: 0.2em solid black;"></div>
         <div class="col-lg-6"  style="text-align: center; border-left: 2px solid black;">
 
-            <a style="padding: 1em; text-decoration: none;" href="">
+            <a style="padding: 1em; text-decoration: none;" 
+            data-bs-toggle="modal" data-bs-target="#LevelSectionModal">
                 <h4>Expert Level - Sections</h4>
                 <div>
                     <img style="width: 10em;" src="{% static 'courses/photos/level_4.jpg' %}" alt="img1">
@@ -332,8 +335,58 @@ padding:2em 0em;"> <!-- dont copy this-->
 <!-- End of the main game -->
 <!-- All the copied content here -->
 
+</div> <!--col-6-lg ended here (1st outer column) -->
+
+
+
+<!-- Start of the revision section -->
+{% if user.is_authenticated and user.student %}
+  {% if user.student in course.student.all  %} <!-- if user has taken the course -->
+  <div class="col-lg-6" style="background-color: whitesmoke; padding:1em;">
+  <!--start of the second outer column -->
+     <h3 style="text-align:center;"> Revision Sections </h3>
+     <hr>
+   <!-- Start of the sections in recommended -->
+    <div style="background-color: lightgrey; padding:0em 1em 1em; border:1px solid black; 
+    display: flex; justify-content:space-between; align-items: center;">
+       <span style="padding: 1em 0em 0em 1em;">
+         {{ section.section_name }} 
+         Section 1 (this is recommended)
+       </span>
+    </div>
+<!-- end of the sections in recommended -->
+<!-- end of the revision section condition -->
+
+
+<!--start of the test section below revision section -->
+<div class="row" style="margin: 0px; padding: 2em 0em;">
+  <div>
+    <h3 style="text-align:center;"> Course Tests </h3>
+    <hr>
+    <a href="">
+      <div style="border: 1px solid black; padding:0.5em 1.3em; 
+       background-color: lightgrey; text-decoration: none; color: black;">
+        1. Give test to unlock the next Level
+      </div>
+    </a> <!-- 1 -->
+    <a href="">
+      <div style="border: 1px solid black; padding:0.5em 1.3em; 
+       background-color: lightgrey; text-decoration: none; color: black;">
+        2. Give test to Complete the course 
+      </div>
+    </a> <!-- 2 -->
   </div>
 </div>
+<!--End of the test course section -->
+   {% endif %}
+{% endif %}
+
+
+
+
+
+</div><!--End of the second outer column -->
+</div> <!--div to end the row of the grid layout -->
 
 <script src="{% static 'accounts/js/bootstrap.bundle.min.js' %}"></script>
  
