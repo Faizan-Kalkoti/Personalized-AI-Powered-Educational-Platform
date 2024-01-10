@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'sections',
     'ckeditor',
     'modules',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

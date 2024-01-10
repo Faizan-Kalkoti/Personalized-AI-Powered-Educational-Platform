@@ -4,76 +4,7 @@
 
 <div class="row" style="margin: 0px; padding:0em 2em;">
   <div class="col-lg-3" style="padding: 3em 1em; text-align:center;">
-   <!-- {% comment %} {% if not user.student%}
-    You are not a student 
-   {% else %}
-   <div style="padding: 1em; padding-bottom: 2em; text-align: center;">
-    <img style="width: 200px; height: 200px; border-radius: 50%; background-color: white;
-             border: 3px solid rgb(73, 73, 73);"
-       src="{{user.student.profile_photo.url}}" alt="image">
-    </div>
-    <h5 style="text-align: center;">Student's Name: {{user.username}}</h5>
-    <br>
-    <!-- Start of the options ->
-    
-
-  <!-- Student Information->
-
-  <!-- Student end ->
-
-
-     <!-- Start of Accordian ->
- <div class="accordion" id="accordionExample">
-  <div class="accordion-item">
-    <h2 class="accordion-header">
-      <button id="accordion-btn1" class="accordion-button  collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-        My Courses
-      </button>
-    </h2>
-    <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-        <strong>This is the first item's accordion body.</strong> 
-      </div>
-    </div>
-  </div>
-  <div class="accordion-item">
-    <h2 class="accordion-header">
-      <button id="accordion-btn2" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-        Test/ Assignments
-      </button>
-    </h2>
-    <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-        <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-      </div>
-    </div>
-  </div>
-  <div class="accordion-item">
-    <h2 class="accordion-header">
-      <button id="accordion-btn3" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-        My Progress
-      </button>
-    </h2>
-    <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-        <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-      </div>
-    </div>
-  </div>
-</div><!-- End of accordion ->
-
-<div style="display: flex; justify-content:center; padding:1em 0em;">
-  <a style="padding: 0.2em 0.4em; text-decoration: none;" href="">pinterest</a>
-  <a style="padding: 0.2em 0.4em; text-decoration: none;" href="">linkedIn</a>
-  <a style="padding: 0.2em 0.4em; text-decoration: none;" href="">blog</a>
-  <a style="padding: 0.2em 0.4em; text-decoration: none;" href="">portfolio</a>
- </div> 
-  </div>
-  <!-- end of the column ->
-  {% endif %} {% endcomment %}
-  -->
-
-
+   
   <div class='teacher-settings1' style="background: linear-gradient( to bottom left, rgb(67,71,80), rgb(47,43,42)); 
     padding: 1em; border-radius: 2em; box-shadow: -1em 1em 2em grey ;">
     
@@ -154,7 +85,7 @@
            <div class="card" >
              <a class="teacher-option-links" href=""> 1. Delete User</a>
              <a class="teacher-option-links" href=""> 2. Change password</a>
-             <a class="teacher-option-links" href=""> 3. Change Profile-pic</a>
+             <button class="teacher-option-links" onclick="ChangeProfile1()"> 3. Change Profile-Pic</button>
            </div>
          </div>
        </div>
@@ -173,10 +104,16 @@
     {% endif %}
    <!--Copied part ends here --> 
 
-  <div class="col-lg-9">
+  
+</div> <!-- end of the col-lg-3-->
+
+<div class="col-lg-9">
+  <div id="student-content" style="padding:3em 3em;">
 
   </div>
 </div>
+
+</div><!-- end of the row -->
 
 
 
@@ -184,6 +121,94 @@
 <script src="{% static 'js/boot/bootstrap.min.js' %}"></script>
 <script src="{% static 'js/boot/popper.min.js' %}"></script>
 
+<script>
+  function ChangeProfile1(){
+    var student_display = document.getElementById('student-content');
+    student_display.innerHTML = `
+       <div> 
+        <div style="text-align:center; padding:2em; border: 1px solid black; border-radius: 8px;">
+        <h3 style="text-align:center;"> Change the Profile Picture </h3> <hr>
+         <form  id="changeformid" method="POST" enctype="multipart/form-data"> 
+          {% csrf_token %}
+         <div class="mb-3">
+          <label for="formimage" class="form-label">Upload the image</label>
+          <input class="form-control" type="file" accept="image/*" id="formimage" name="formimage">
+         </div>
+          <button class="btn btn-dark" type="button" onclick="ChangeProfile2()">Update Picture</button>
+         </form>
+        </div>
+       </div>`;
+  }
+  function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                  var cookies = document.cookie.split(';');
+                  for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                      cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                      break;
+                    }
+                  }
+                }
+                return cookieValue;
+              }
+
+            
+ // Get the CSRF token from the cookie 
+var csrftoken = getCookie('csrftoken');
+
+  function sendImageDataToServer(imageData) {
+    // Make an AJAX request to your Django server endpoint
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', "{% url 'accounts:updateprofilephoto' %}", true);
+    xhr.setRequestHeader('X-CSRFToken', csrftoken);  // Add CSRF token
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+                console.log('Server response:', response);
+                // Handle the server response as needed
+            } else {
+                console.error('Failed to upload image. Server returned:', xhr.status, xhr.statusText);
+            }
+        }
+    };
+
+    // Set up the request payload
+    var formData = new FormData();
+    formData.append('formimage', imageData);
+    
+    // Send the request
+    xhr.send(formData);
+}
+
+
+
+
+  
+  function ChangeProfile2(){
+    alert('pictuer updating')
+    var image_field = document.getElementById('formimage');
+    var file = image_field.files[0];
+
+    if (file) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                var imageData = e.target.result;
+                console.log('Image data:', imageData);
+                sendImageDataToServer(imageData);
+            };
+
+            // Read the file as a data URL
+            reader.readAsDataURL(file);
+        } else {
+            alert('No file selected.');
+        }
+  }
+  
+</script>
 
 
 {% endblock content %}

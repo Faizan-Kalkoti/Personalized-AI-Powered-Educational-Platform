@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{% static 'courses/css/courses.css' %}">
     <link rel="stylesheet" href="{% static 'accounts/css/accounts.css' %}">
     <link rel="stylesheet" href="{% static 'modules/modules.css' %}">
+    <link rel="stylesheet" href="{% static 'footer/css/footer.css' %}">
 </head>
 <body>
 
@@ -85,6 +86,38 @@
     <script src="{% static 'js/boot/popper.min.js' %}"></script>
  
     {% endblock content %}
+
+<div style="background-color:white; padding:0.05em 0em;">
+</div>
+
+<!-- footer starts here -->
+<footer>
+  <div class="footer-container">
+    <div class="left-col">
+      <div class="social-media">
+        <a href="#"><img src="{% static 'footer/photos/fb.png' %}"></a>
+        <a href="#"><img src="{% static 'footer/photos/insta.png' %}"></a>
+        <a href="#"><img src="{% static 'footer/photos/tt.png' %}"></a>
+        <a href="#"><img src="{% static 'footer/photos/linkedin.png' %}"></a>
+      </div><br>
+      <p class="rights-text">Copyright © 2024 Created By Faizan, Sahil, Ayan and Ahsan. All Rights Reserved.</p>
+      <br><p><img src="{% static 'footer/photos/location.png' %}"> Trinity College of Engineering and Research<br>Pune-411001</p><br>
+      <p><img src="{% static 'footer/photos/phone.png' %}"> +91-7755-9099-29<br><img src="{% static 'footer/photos/mail.png' %}">&nbsp; Faizan.AIedu@gmail.com<br>
+     <!-- <img style="width:18px;" src="{% static 'footer/photos/bloggy.png' %}"> &nbsp; <a style="color:white; text-decoration:none;" href="">Blog</a> -->
+      </p>
+    </div>
+    <div class="right-col">
+      <h1 style="color: #fff">Teach at our Website</h1>
+      <div class="border"></div><br>
+      <p>Enter Your Email to teach here.</p>
+      <form class="register-form">
+        <input class="txtb" type="email" placeholder="Enter Your Email">
+        <input class="btn" type="submit" value="Submit">
+      </form>
+    </div>
+  </div>
+</footer>
+<!-- footer ends here -->
     
 
     

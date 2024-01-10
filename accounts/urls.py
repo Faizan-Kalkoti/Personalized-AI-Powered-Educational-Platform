@@ -12,8 +12,10 @@ urlpatterns = [
     path('teacher-signup/', views.SignupforTeacher.as_view(), name='teachersignup'),
     path('login/',auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    # Rest API
+    path('change-pic/',views.ChangePicAPIView, name='updateprofilephoto'),
 
-     # FOr ajax request
+    # For Ajax Request
     path('generate-OTP/', views.generateOTP, name="generateotp"),
     path('verify-top/', views.verify_OTP, name="verifyotp"),
 ]

@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
+
 from .forms import (BaseUserForm, TeacherRegistrationForm, 
-                    StudentRegistrationForm)
+                    StudentRegistrationForm, UpdateProfileForm )
 
 # All these required for OTP generation and verification
 from django.http import JsonResponse
@@ -12,6 +14,7 @@ from accounts.models import OTPverification
 from datetime import datetime, timedelta
 from pytz import timezone
 from django.utils import timezone
+
 import random
 import json
 import pyotp
@@ -20,6 +23,11 @@ from pathlib import Path
 from finalproject import settings
 from django.core.mail import send_mail, EmailMessage
 from django.conf import settings
+
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework import status 
+from rest_framework.decorators import api_view
 
 User = get_user_model()
 
@@ -30,6 +38,17 @@ def index(request):
 
 def register(request):
     return render(request, 'register.html')
+
+@api_view(['POST'])
+def ChangePicAPIView(request, *args, **kwargs):
+        user_form = UpdateProfileForm(request.data)
+        print(user_form)
+        if user_form.is_valid():
+            if 'formimage' in request.FILES:
+                request.user.profile_photo = request.FILES['formimage']
+                request.user.save()
+                return Response({'detail': 'Image uploaded successfully'}, status=status.HTTP_200_OK)
+        return Response({'error': 'No image file provided'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 

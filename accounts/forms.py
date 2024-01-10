@@ -37,3 +37,7 @@ class StudentRegistrationForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['profile_photo'].labels = "Upload you profile photo"
         self.fields['bio'].labels = "Enter your bio"
+
+
+class UpdateProfileForm(forms.Form):
+    formimage = forms.ImageField()
